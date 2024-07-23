@@ -25,6 +25,7 @@ namespace ShopCredit.Application.CQRS.Handlers
             values.Email = command.Email;
             values.PhoneNumber = command.PhoneNumber;
             values.Address = command.Address;
+            await _repository.UpdateAsync(values);
         }
     }
 }
