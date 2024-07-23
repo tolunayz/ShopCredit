@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
+namespace ShopCredit.Application.CQRS.Handlers
 {
     public class GetCustomerQueryHandler
     {
@@ -28,12 +28,12 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
                 Name = x.Name,
                 Surname = x.Surname,
                 PhoneNumber = x.PhoneNumber,
-                Email= x.Email,
-                Adress= x.Adress
+                Email = x.Email,
+                Adress = x.Address
 
             }
             ).ToList();
-           
+
 
         }
 
@@ -41,7 +41,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
     }
 
-    
-    
+
+
 
 }
