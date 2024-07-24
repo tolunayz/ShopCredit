@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopCredit.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace ShopCredit.Domain.Entities
         public  string?  Email { get; set; }
 
         public string? Address { get; set; }
+
+        public virtual CustomerAccount CustomerAccount { get; set; }
     }
 }

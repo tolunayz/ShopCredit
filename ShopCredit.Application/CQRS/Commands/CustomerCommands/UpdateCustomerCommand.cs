@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Results
+namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 {
-    public class GetCustomerQueryResult
+    public class UpdateCustomerCommand
     {
-        
         public int CustomerID { get; set; }
 
         public required string Name { get; set; }
@@ -20,6 +18,6 @@ namespace ShopCredit.Application.CQRS.Results
 
         public string? Email { get; set; }
 
-        public string? Adress { get; set; }
+        public string? Address { get; set; }
     }
 }

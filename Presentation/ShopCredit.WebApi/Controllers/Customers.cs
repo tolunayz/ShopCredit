@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ShopCredit.Application.CQRS.Commands;
-using ShopCredit.Application.CQRS.Handlers;
-using ShopCredit.Application.CQRS.Queries.CustomerQueries;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShopCredit.Application.CQRS.Commands.CustomerCommands;
+using ShopCredit.Application.CQRS.Handlers.CustomerHandlers;
+using ShopCredit.Application.CQRS.Queries;
 
 namespace ShopCredit.WebApi.Controllers
 {

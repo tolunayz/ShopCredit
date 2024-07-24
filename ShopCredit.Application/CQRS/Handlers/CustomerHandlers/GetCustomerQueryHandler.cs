@@ -1,13 +1,8 @@
-﻿using ShopCredit.Application.CQRS.Results;
+﻿using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Handlers
+namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
     public class GetCustomerQueryHandler
     {
@@ -29,7 +24,7 @@ namespace ShopCredit.Application.CQRS.Handlers
                 Surname = x.Surname,
                 PhoneNumber = x.PhoneNumber,
                 Email = x.Email,
-                Adress = x.Address
+                Address = x.Address
 
             }
             ).ToList();

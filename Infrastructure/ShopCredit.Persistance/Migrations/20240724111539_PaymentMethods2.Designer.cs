@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopCredit.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ShopCredit.Infrastructure.Context;
 namespace ShopCredit.Infrastructure.Migrations
 {
     [DbContext(typeof(ShopCreditContext))]
-    partial class ShopCreditContextModelSnapshot : ModelSnapshot
+    [Migration("20240724111539_PaymentMethods2")]
+    partial class PaymentMethods2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,10 +67,15 @@ namespace ShopCredit.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PaymentPaymetID")
+                        .HasColumnType("int");
+
                     b.Property<int>("PaymetID")
                         .HasColumnType("int");
 
                     b.HasKey("PaymentMethodId");
+
+                    b.HasIndex("PaymentPaymetID");
 
                     b.ToTable("PaymentMethods");
                 });
@@ -107,24 +115,22 @@ namespace ShopCredit.Infrastructure.Migrations
                     b.Property<long>("CurrentDebt")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("CustomerAccountAccountId")
+                        .HasColumnType("int");
+
                     b.Property<long>("PaidDebt")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("PaymentMethodId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymetMethodId")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymetMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TotalDebt")
                         .HasColumnType("bigint");
 
                     b.HasKey("PaymetID");
 
-                    b.HasIndex("AccountID")
-                        .IsUnique();
-
-                    b.HasIndex("PaymentMethodId");
+                    b.HasIndex("CustomerAccountAccountId");
 
                     b.ToTable("CustomerAccPaymentS");
                 });
@@ -152,23 +158,27 @@ namespace ShopCredit.Infrastructure.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.HasIndex("CustomerID")
-                        .IsUnique();
+                    b.HasIndex("CustomerID");
 
                     b.ToTable("CustomersAccounts");
+                });
+
+            modelBuilder.Entity("ShopCredit.Domain.Entities.PaymentMethod", b =>
+                {
+                    b.HasOne("ShopCredit.Entities.CustomerAccPayment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentPaymetID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccPayment", b =>
                 {
                     b.HasOne("ShopCredit.Entities.CustomerAccount", "CustomerAccount")
-                        .WithOne("CustomerAccPayment")
-                        .HasForeignKey("ShopCredit.Entities.CustomerAccPayment", "AccountID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShopCredit.Domain.Entities.PaymentMethod", null)
-                        .WithMany("CustomerAccPayments")
-                        .HasForeignKey("PaymentMethodId");
+                        .WithMany()
+                        .HasForeignKey("CustomerAccountAccountId");
 
                     b.Navigation("CustomerAccount");
                 });
@@ -176,29 +186,12 @@ namespace ShopCredit.Infrastructure.Migrations
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
                 {
                     b.HasOne("ShopCredit.Domain.Entities.Customer", "Customer")
-                        .WithOne("CustomerAccount")
-                        .HasForeignKey("ShopCredit.Entities.CustomerAccount", "CustomerID")
+                        .WithMany()
+                        .HasForeignKey("CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("ShopCredit.Domain.Entities.Customer", b =>
-                {
-                    b.Navigation("CustomerAccount")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ShopCredit.Domain.Entities.PaymentMethod", b =>
-                {
-                    b.Navigation("CustomerAccPayments");
-                });
-
-            modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
-                {
-                    b.Navigation("CustomerAccPayment")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

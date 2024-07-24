@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Queries.CustomerQueries
+namespace ShopCredit.Application.CQRS.Queries
 {
     public class GetCustomerByIdQuery
     {

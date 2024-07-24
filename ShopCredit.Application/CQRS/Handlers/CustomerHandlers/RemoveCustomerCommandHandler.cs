@@ -1,4 +1,4 @@
-﻿using ShopCredit.Application.CQRS.Commands;
+﻿using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Handlers
+namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
     public class RemoveCustomerCommandHandler
     {

@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Commands
+namespace ShopCredit.Application.CQRS.Results.CustomerResults
 {
-    public class CreateCustomerCommand
+    public class GetCustomerByIdQueryResult
     {
+
+        public int CustomerID { get; set; }
 
         public required string Name { get; set; }
 

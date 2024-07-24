@@ -1,29 +1,27 @@
-﻿using ShopCredit.Domain.Entities;
+﻿using ShopCredit.Application.CQRS.Results.CustomerAccPaymentResults;
+using ShopCredit.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Entities
+namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 {
-    public class CustomerAccount
+    public class GetCustomerAccountByIdQueryResult
     {
-        [Key]
         public int AccountId { get; set; }
 
         public int CustomerID { get; set; }
+
+        public Customer? Customer { get; set; }
 
         public DateTime DebtDate { get; set; }
 
         public Boolean IsPaid { get; set; }
 
         public required string Description { get; set; }
-
-        public virtual Customer Customer { get; set; }
-
-        public virtual CustomerAccPayment CustomerAccPayment { get; set; }
+    
+        public GetCustomerAccPaymentQueryResult PaymentResult { get; set; }
     }
 }

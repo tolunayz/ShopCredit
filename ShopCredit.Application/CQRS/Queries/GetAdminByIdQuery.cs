@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopCredit.Application.CQRS.Commands
+namespace ShopCredit.Application.CQRS.Queries
 {
-    public class RemoveCustomerCommand
+    public class GetAdminByIdQuery
     {
         public int Id { get; set; }
 
-        public RemoveCustomerCommand(int id)
+        public GetAdminByIdQuery(int id)
         {
             Id = id;
         }
