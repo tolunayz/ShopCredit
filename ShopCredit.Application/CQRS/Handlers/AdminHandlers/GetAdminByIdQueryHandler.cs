@@ -9,15 +9,19 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
     {
 
        private  readonly IRepository<Admin> _repository;
+        private readonly IWriteRepository<Admin> _writeRepository;
+        private readonly IReadRepository<Admin> _readRepository;
 
-        public GetAdminByIdQueryHandler(IRepository<Admin> repository)
+        public GetAdminByIdQueryHandler(IRepository<Admin> repository, IWriteRepository<Admin> writeRepository, IReadRepository<Admin> readRepository)
         {
             _repository = repository;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
         }
 
         public async Task<GetAdminByIdQueryResult> Handle(GetAdminByIdQuery query)
         {
-            var values = await _repository.GetByIdAsync(query.Id);
+            var values = await _readRepository.GetByIdAsync(query.Id);
             return new GetAdminByIdQueryResult
             {
                 AdminID=values.AdminId,

@@ -12,20 +12,28 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
     public class UpdateCustomerCommandHandler
     {
         private readonly IRepository<Customer> _repository;
+        private readonly IWriteRepository<Customer> _writeRepository;
+        private readonly IReadRepository<Customer> _readRepository;
 
-        public UpdateCustomerCommandHandler(IRepository<Customer> repository)
+        public UpdateCustomerCommandHandler
+            (IRepository<Customer> repository, 
+            IReadRepository<Customer> readRepository,
+            IWriteRepository<Customer> writeRepository
+            )
         {
             _repository = repository;
+            _readRepository = readRepository;
+            _writeRepository = writeRepository;
         }
         public async Task Handle(UpdateCustomerCommand command)
         {
-            var values = await _repository.GetByIdAsync(command.CustomerID);
+            var values = await _readRepository.GetByIdAsync(command.CustomerID);
             values.Name = command.Name;
             values.Surname = command.Surname;
             values.Email = command.Email;
             values.PhoneNumber = command.PhoneNumber;
             values.Address = command.Address;
-            await _repository.UpdateAsync(values);
+            await _writeRepository.Update(values);
         }
     }
 }

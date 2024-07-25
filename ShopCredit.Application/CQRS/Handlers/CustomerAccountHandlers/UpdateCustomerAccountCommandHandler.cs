@@ -13,30 +13,41 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
     public class UpdateCustomerAccountCommandHandler
     {
-        private readonly IRepository<CustomerAccount> _repository;
+        private readonly IWriteRepository<CustomerAccount> _writeRepository;
+        private readonly IReadRepository<CustomerAccount> _readRepository;
 
-        public UpdateCustomerAccountCommandHandler(IRepository<CustomerAccount> repository)
+        public UpdateCustomerAccountCommandHandler(IWriteRepository<CustomerAccount> writeRepository, IReadRepository<CustomerAccount> readRepository)
         {
-            _repository = repository;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
         }
 
         public async Task Handle(UpdateCustomerAccountCommand command)
         {
-            var values = await _repository.GetByIdAsync(command.CustomerID);
-            values.Customer= command.Customer;
+            var values = await _readRepository.GetByIdAsync(command.CustomerID);
+           
             values.DebtDate= command.DebtDate;
             values.Description= command.Description;
             values.IsPaid= command.IsPaid;
            
-            await _repository.UpdateAsync(values);
+            await _writeRepository.Update(values);
         }
     }
 }
+
 //public int AccountId { get; set; }
 
 //public int CustomerID { get; set; }
 
-//public Customer? Customer { get; set; }
+//public required string Name { get; set; }
+
+//public required string Surname { get; set; }
+
+//public required int PhoneNumber { get; set; }
+
+//public string? Email { get; set; }
+
+//public string? Address { get; set; }
 
 //public DateTime DebtDate { get; set; }
 

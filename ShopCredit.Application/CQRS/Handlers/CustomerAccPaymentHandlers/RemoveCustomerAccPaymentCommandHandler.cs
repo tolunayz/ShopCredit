@@ -12,16 +12,23 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccPaymentHandlers
 {
     public class RemoveCustomerAccPaymentCommandHandler
     {
-        private readonly IRepository<CustomerAccPayment> _repository;
+        private readonly IWriteRepository<CustomerAccPayment> _writeRepository;
+        private readonly IReadRepository<CustomerAccPayment> _readRepository;
 
-        public RemoveCustomerAccPaymentCommandHandler(IRepository<CustomerAccPayment> repository)
+        public RemoveCustomerAccPaymentCommandHandler
+        (
+            IWriteRepository<CustomerAccPayment> writeRepository, 
+            IReadRepository<CustomerAccPayment> readRepository
+        )
         {
-            _repository = repository;
+            _writeRepository = writeRepository;
+            _readRepository = readRepository;
         }
+
         public async Task Handle(RemoveCustomerAccPaymentCommand command)
         {
-            var value = await _repository.GetByIdAsync(command.Id);
-            await _repository.RemoveAsync(value);
+            var value = await _readRepository.GetByIdAsync(command.Id);
+             _writeRepository.Remove(value);
         }
     }
 }

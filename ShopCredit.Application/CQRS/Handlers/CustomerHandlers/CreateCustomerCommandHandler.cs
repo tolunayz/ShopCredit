@@ -13,16 +13,17 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
     public class CreateCustomerCommandHandler
     {
-        private readonly IRepository<Customer> _repository;
+        private readonly IWriteRepository<Customer> _writeRepository;
 
-        public CreateCustomerCommandHandler(IRepository<Customer> repository)
+
+        public CreateCustomerCommandHandler(IWriteRepository<Customer> writerRepository)
         {
-            _repository = repository;
+            _writeRepository = writerRepository;
         }
 
         public async Task Handle(CreateCustomerCommand command)
         {
-            await _repository.CreateAsync(new Customer
+            await _writeRepository.CreateAsync(new Customer
             {
                 Name = command.Name,
                 Surname = command.Surname,

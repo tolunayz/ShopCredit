@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,18 @@ namespace ShopCredit.Application.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        Task<List<T>> GetAllAsync();
+        DbSet<T> Table { get; }
 
-        Task<T> GetByIdAsync(int id);
+        //bool RemoveById(string id);
 
-        Task CreateAsync(T entity);
+        ////Task<List<T>> GetAllAsync();
 
-        Task UpdateAsync(T entity);
+        ////Task<T> GetByIdAsync(int id);
 
-        Task RemoveAsync(T entity);
+        ////Task CreateAsync(T entity);
+
+        ////Task UpdateAsync(T entity);
+
+        ////Task RemoveAsync(T entity);
     }
 }

@@ -12,11 +12,11 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
     public class CreateCustomerAccountCommandHandler
     {
-        private readonly IRepository<CustomerAccount> _repository;
+        private readonly IWriteRepository<CustomerAccount> _writeRepository;
 
-        public CreateCustomerAccountCommandHandler(IRepository<CustomerAccount> repository, IRepository<Customer> customerrepository)
+        public CreateCustomerAccountCommandHandler(IWriteRepository<CustomerAccount> writerRepository, IWriteRepository<Customer> customerrepository)
         {
-            _repository = repository;
+            _writeRepository = writerRepository;
             
         }
 
@@ -27,7 +27,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 
 
 
-            await _repository.CreateAsync(new CustomerAccount
+            await _writeRepository.CreateAsync(new CustomerAccount
             {
                 DebtDate = command.DebtDate,
                 IsPaid = command.IsPaid,

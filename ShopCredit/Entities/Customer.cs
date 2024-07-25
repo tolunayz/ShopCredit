@@ -1,4 +1,5 @@
-﻿using ShopCredit.Entities;
+﻿using ShopCredit.Domain.Entities.Base;
+using ShopCredit.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace ShopCredit.Domain.Entities
 {
-    public class Customer
+    public class Customer: BaseEntity
     {
-        [Key]
-        public int CustomerID { get; set; }
-
+       
         public required string Name { get; set; }
 
         public required string Surname { get; set; }

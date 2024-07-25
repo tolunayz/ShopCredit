@@ -13,7 +13,11 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerAccPaymentCommands
 
         public int AccountID { get; set; }
 
-        public CustomerAccount? CustomerAccount { get; set; }
+        public DateTime DebtDate { get; set; }
+
+        public Boolean IsPaid { get; set; }
+
+        public required string Description { get; set; }
 
         public int PaymetMethodId { get; set; }
 

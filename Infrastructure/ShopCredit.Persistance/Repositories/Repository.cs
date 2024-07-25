@@ -18,6 +18,8 @@ namespace ShopCredit.Infrastructure.Repositories
             _context = context;
         }
 
+        public DbSet<T> Table => _context.Set<T>();
+
         public async Task CreateAsync(T entity)
         {
             _context.Set<T>().Add(entity);
@@ -38,6 +40,11 @@ namespace ShopCredit.Infrastructure.Repositories
         {
             _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public bool RemoveById(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(T entity)

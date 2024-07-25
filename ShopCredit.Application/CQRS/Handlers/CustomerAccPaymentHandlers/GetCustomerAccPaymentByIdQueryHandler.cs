@@ -13,16 +13,19 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccPaymentHandlers
 {
     public class GetCustomerAccPaymentByIdQueryHandler
     {
-        private readonly IRepository<CustomerAccPayment> _repository;
+        private readonly IReadRepository<CustomerAccPayment> _readRepository;
 
-        public GetCustomerAccPaymentByIdQueryHandler(IRepository<CustomerAccPayment> repository)
+        public GetCustomerAccPaymentByIdQueryHandler
+            (
+            IReadRepository<CustomerAccPayment> readRepository
+            )
         {
-            _repository = repository;
+            _readRepository = readRepository;
         }
 
         public async Task<GetCustomerAccPaymentByIdQueryResult> Handle(GetCustomerAccPaymentByIdQuery query)
         {
-            var values = await _repository.GetByIdAsync(query.Id);
+            var values = await _readRepository.GetByIdAsync(query.Id);
             return new GetCustomerAccPaymentByIdQueryResult
             {
                AccountID=values.AccountID,

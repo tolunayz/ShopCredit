@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ShopCredit.Domain.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopCredit.Entities
 {
-    public class CustomerAccPayment
+    public class CustomerAccPayment:BaseEntity
     {
-        [Key]
-        public int PaymetID { get; set; }
 
         public int AccountID { get; set; }
 
