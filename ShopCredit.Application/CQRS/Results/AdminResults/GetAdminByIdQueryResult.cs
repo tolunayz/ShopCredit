@@ -8,8 +8,7 @@ namespace ShopCredit.Application.CQRS.Results.AdminResults
 {
     public class GetAdminByIdQueryResult
     {
-        public int AdminID { get; set; }
-        public required string AdminName { get; set; }
-        public required string AdminPassword { get; set; }
+        public  string? AdminName { get; set; }
+        public  string? AdminPassword { get; set; }
     }
 }

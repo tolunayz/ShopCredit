@@ -8,13 +8,13 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 {
     public class UpdateCustomerCommand
     {
-        public int CustomerID { get; set; }
+        public Guid CustomerID { get; set; }
 
-        public required string Name { get; set; }
+        public  string? Name { get; set; }
 
-        public required string Surname { get; set; }
+        public  string? Surname { get; set; }
 
-        public required int PhoneNumber { get; set; }
+        public  int PhoneNumber { get; set; }
 
         public string? Email { get; set; }
 

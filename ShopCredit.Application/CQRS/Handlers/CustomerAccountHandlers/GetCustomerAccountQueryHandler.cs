@@ -1,43 +1,45 @@
-﻿using ShopCredit.Application.CQRS.Results.AdminResults;
-using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
+﻿using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
 using ShopCredit.Application.Interfaces;
+using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
     public class GetCustomerAccountQueryHandler
     {
-        private readonly IRepository<CustomerAccount> _repository;
         private readonly IReadRepository<CustomerAccount> _readRepository;
+        private readonly IReadRepository<Customer> _customerReadRepository;
 
         public GetCustomerAccountQueryHandler
-            (IRepository<CustomerAccount> repository,
-            IReadRepository<CustomerAccount> readRepository
-            )
+            (
+            IReadRepository<CustomerAccount> readRepository,
+            IReadRepository<Customer> customerReadRepository)
         {
-            _repository = repository;
             _readRepository = readRepository;
+            _customerReadRepository = customerReadRepository;
         }
 
         public async Task<List<GetCustomerAccountByIdQueryResult>> Handle()
         {
-            var values = _readRepository.GetAll();
+            var accounts = _readRepository.GetAll();
+            var customers = _customerReadRepository.GetAll();
 
-            return values.Select(x => new GetCustomerAccountByIdQueryResult
+            return accounts.Select(x => new GetCustomerAccountByIdQueryResult
             {
-                CustomerID = x.CustomerID,
+               
+                AccountId = x.Id,
                 Description = x.Description,
                 IsPaid = x.IsPaid,
-                DebtDate = x.DebtDate,
-                Customer = x.Customer,
-                AccountId = x.AccountId
+                CustomerResult = new Results.CustomerResults.GetCustomerQueryResult
+                {
+                    Id = x.Customer.Id,
+                    Address = x.Customer.Address,
+                    Email = x.Customer.Email,
+                    Name = x.Customer.Name,
+                    PhoneNumber = x.Customer.PhoneNumber,
+                    Surname = x.Customer.Surname
+                },
             }).ToList();
         }
     }
 }
-

@@ -16,15 +16,16 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
         }
 
         public async Task Handle(CreateAdminCommand command)
-        {
-            await _writeRepository.CreateAsync(new Admin
-            {
-                AdminName = command.AdminName,
-                AdminPassword = command.AdminPassword,
-            });
-
+        {               
+            
+            var admin = new Admin();
+            admin.AdminProperties
+                (
+                command.AdminName,
+                command.AdminPassword
+                );
+            await _writeRepository.CreateAsync( admin );
+            await _writeRepository.SaveAsync();
         }
-
-
     }
 }

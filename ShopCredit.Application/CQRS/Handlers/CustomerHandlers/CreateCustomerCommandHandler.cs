@@ -1,13 +1,6 @@
-﻿using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
-using ShopCredit.Application.CQRS.Commands.CustomerCommands;
+﻿using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using ShopCredit.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
@@ -23,15 +16,13 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
         public async Task Handle(CreateCustomerCommand command)
         {
-            await _writeRepository.CreateAsync(new Customer
-            {
-                Name = command.Name,
-                Surname = command.Surname,
-                PhoneNumber = command.PhoneNumber,
-                Email = command.Email,
-                Address = command.Address
-            });
-
+            await _writeRepository.CreateAsync(Customer.Create(
+                name: command.Name,
+                surname: command.Surname,
+                phoneNumber: command.PhoneNumber,
+                email: command.Email
+            ).SetAddress(address:command.Address));
+            await _writeRepository.SaveAsync();
         }
         //public CreateCustomerAccountCommandHandler(IRepository<CustomerAccount> repository)
         //{

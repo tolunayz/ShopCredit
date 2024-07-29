@@ -2,6 +2,7 @@
 using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
+using System.Diagnostics;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
@@ -18,16 +19,32 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
         public async Task<GetCustomerByIdQueryResult> Handle(GetCustomerByIdQuery query)
         {
-            var values = await _readRepository.GetByIdAsync(query.Id);
-            return new GetCustomerByIdQueryResult
+            try
             {
-                CustomerID = values.CustomerID,
-                Name = values.Name,
-                Surname = values.Surname,
-                PhoneNumber = values.PhoneNumber,
-                Address = values.Address,
+                var values = await _readRepository.GetByIdAsync(query.Id);
 
-            };
+                if (values == null)
+                {
+                    throw new KeyNotFoundException($"{query.Id} Bu Id ye sahip kullanıcı bulunamadı!");
+                }
+
+                return new GetCustomerByIdQueryResult
+                {
+                    Name = values.Name,
+                    Surname = values.Surname,
+                    PhoneNumber = values.PhoneNumber,
+                    Address = values.Address,
+                };
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while getting the customer by ID.", ex);
+            }
         }
+
     }
 }

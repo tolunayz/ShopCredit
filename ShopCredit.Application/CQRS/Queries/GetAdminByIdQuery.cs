@@ -8,9 +8,9 @@ namespace ShopCredit.Application.CQRS.Queries
 {
     public class GetAdminByIdQuery
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public GetAdminByIdQuery(int id)
+        public GetAdminByIdQuery(Guid id)
         {
             Id = id;
         }

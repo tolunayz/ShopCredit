@@ -3,50 +3,48 @@ using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
+using System.Security.AccessControl;
 using System.Security.Principal;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
     public class GetCustomerAccountByIdQueryHandler
     {
+        private readonly IReadRepository<Customer> _customerRepository;
         private readonly IReadRepository<CustomerAccount> _customerAccountRepository;
-        private readonly IReadRepository<CustomerAccPayment> _customerAccountPaymentRepository;
+
 
 
         public GetCustomerAccountByIdQueryHandler
             (
             IReadRepository<CustomerAccount> customerAccountRepository,
-            IReadRepository<CustomerAccPayment> customerAccountPaymentRepository
-            )
+            IReadRepository<Customer> customerRepository)
         {
             _customerAccountRepository = customerAccountRepository;
-            _customerAccountPaymentRepository = customerAccountPaymentRepository;
+            _customerRepository = customerRepository;
         }
 
         public async Task<GetCustomerAccountByIdQueryResult> Handle(GetCustomerAccountByIdQuery query)
         {
-            var accountList = _customerAccountRepository.GetAll();
-            var account = accountList.Where(x => x.CustomerID == query.CustomerId).First();
-            //var paymentList = await _customerAccountPaymentRepository.GetAllAsync();
-            //var payment = paymentList.Where(x=> x.AccountID == account.AccountId).First();
+            var accountList =  _customerAccountRepository.GetAll();
+            var account = accountList.FirstOrDefault(x => x.Customer.Id == query.CustomerId);
+
+            var customer = await _customerRepository.GetByIdAsync(query.CustomerId);
 
             return new GetCustomerAccountByIdQueryResult
             {
-                AccountId = account.AccountId,
-                CustomerID = account.CustomerID,
+                AccountId = account.Id,
                 Description = account.Description,
-                Customer = account.Customer,
-                DebtDate = account.DebtDate,
                 IsPaid = account.IsPaid,
-                //PaymentResult = new Results.CustomerAccPaymentResults.GetCustomerAccPaymentQueryResult
-                //{
-                //    AccountID= payment.AccountID,
-                //    CurrentDebt = payment.CurrentDebt,
-                //    PaymetMethod= payment.PaymetMethod,
-                //    PaidDebt= payment.PaidDebt, 
-                //    PaymetID= payment.PaymetID,
-                //    TotalDebt = payment.TotalDebt,
-                //}
+                CustomerResult = new Results.CustomerResults.GetCustomerQueryResult
+                {
+                    Id = customer.Id,
+                    Address = customer.Address,
+                    Email = customer.Email,
+                    Name = customer.Name,
+                    PhoneNumber = customer.PhoneNumber,
+                    Surname = customer.Surname
+                },
             };
         }
     }

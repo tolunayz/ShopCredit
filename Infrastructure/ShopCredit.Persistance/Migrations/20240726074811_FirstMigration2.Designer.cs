@@ -12,8 +12,8 @@ using ShopCredit.Infrastructure.Context;
 namespace ShopCredit.Infrastructure.Migrations
 {
     [DbContext(typeof(ShopCreditContext))]
-    [Migration("20240723222935_PaymentMig")]
-    partial class PaymentMig
+    [Migration("20240726074811_FirstMigration2")]
+    partial class FirstMigration2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,41 +27,38 @@ namespace ShopCredit.Infrastructure.Migrations
 
             modelBuilder.Entity("ShopCredit.Domain.Entities.Customer", b =>
                 {
-                    b.Property<int>("CustomerID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<int?>("PhoneNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CustomerID");
+                    b.HasKey("Id");
 
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("ShopCredit.Entities.Admin", b =>
                 {
-                    b.Property<int>("AdminId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AdminName")
                         .IsRequired()
@@ -71,69 +68,54 @@ namespace ShopCredit.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AdminId");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccPayment", b =>
                 {
-                    b.Property<int>("PaymetID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentDebt")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymetID"));
-
-                    b.Property<int>("AccountID")
+                    b.Property<int>("PaidDebt")
                         .HasColumnType("int");
 
-                    b.Property<long>("CurrentDebt")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("CustomerAccountAccountId")
+                    b.Property<int>("TotalDebt")
                         .HasColumnType("int");
 
-                    b.Property<long>("PaidDebt")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("PaymetMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("TotalDebt")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("PaymetID");
-
-                    b.HasIndex("CustomerAccountAccountId");
+                    b.HasKey("Id");
 
                     b.ToTable("CustomerAccPaymentS");
                 });
 
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
                 {
-                    b.Property<int>("AccountId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
-
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DebtDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
 
-                    b.HasKey("AccountId");
-
-                    b.HasIndex("CustomerID");
+                    b.HasKey("Id");
 
                     b.ToTable("CustomersAccounts");
                 });
@@ -141,8 +123,10 @@ namespace ShopCredit.Infrastructure.Migrations
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccPayment", b =>
                 {
                     b.HasOne("ShopCredit.Entities.CustomerAccount", "CustomerAccount")
-                        .WithMany()
-                        .HasForeignKey("CustomerAccountAccountId");
+                        .WithOne("CustomerAccPayment")
+                        .HasForeignKey("ShopCredit.Entities.CustomerAccPayment", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CustomerAccount");
                 });
@@ -150,12 +134,24 @@ namespace ShopCredit.Infrastructure.Migrations
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
                 {
                     b.HasOne("ShopCredit.Domain.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerID")
+                        .WithOne("CustomerAccount")
+                        .HasForeignKey("ShopCredit.Entities.CustomerAccount", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("ShopCredit.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("CustomerAccount")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
+                {
+                    b.Navigation("CustomerAccPayment")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

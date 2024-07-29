@@ -9,7 +9,7 @@ namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 {
     public class GetCustomerQuerytResults
     {
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
 
         public int CustomerID { get; set; }
 
@@ -19,6 +19,6 @@ namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 
         public Boolean IsPaid { get; set; }
 
-        public required string Description { get; set; }
+        public  string Description { get; set; }
     }
 }

@@ -11,12 +11,10 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
 {
     public class GetAdminQueryHandler
     {
-        private readonly IRepository<Admin> _repository;
         private readonly IReadRepository<Admin> _readRepository;
 
-        public GetAdminQueryHandler(IRepository<Admin> repository, IReadRepository<Admin> readRepository)
+        public GetAdminQueryHandler(IReadRepository<Admin> readRepository)
         {
-            _repository = repository;
             _readRepository = readRepository;
         }
 
@@ -25,7 +23,7 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
             var values = _readRepository.GetAll();
             return values.Select(x => new GetAdminQueryResult
             {
-                AdminID = x.AdminId,
+                Id= x.Id,
                 AdminName = x.AdminName,
                 AdminPassword = x.AdminPassword
             }).ToList();

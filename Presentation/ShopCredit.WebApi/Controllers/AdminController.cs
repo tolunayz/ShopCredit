@@ -31,14 +31,13 @@ namespace ShopCredit.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAdmin(int id)
+        public async Task<IActionResult> GetAdmin(Guid id)
         {
             var values = await _getAdminByIdQueryHandler.Handle(new GetAdminByIdQuery(id));
             return Ok(values);
         }
 
         [HttpGet]
-
         public async Task<IActionResult> AdminList()
         {
             var values = await _getAdminQueryHandler.Handle();
@@ -46,7 +45,6 @@ namespace ShopCredit.WebApi.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> CreateAdmin(CreateAdminCommand command)
         {
             await _createAdminCommandHandler.Handle(command);
@@ -54,15 +52,13 @@ namespace ShopCredit.WebApi.Controllers
         }
 
         [HttpDelete]
-
-        public async Task<IActionResult> RemoveAdmin(int id)
+        public async Task<IActionResult> RemoveAdmin(Guid id)
         {
             await _removeAdminCommandHandler.Handle(new RemoveAdminCommand(id));
             return Ok("Kullanıcı Silindi");
         }
 
         [HttpPut]
-
         public async Task<IActionResult> UpdateAdmin(UpdateAdminCommand command)
         {
             await _updateAdminCommandHandler.Handle(command);

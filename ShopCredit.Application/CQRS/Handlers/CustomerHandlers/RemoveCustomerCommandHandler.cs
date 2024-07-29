@@ -30,6 +30,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
         {
             var value = await _readRepository.GetByIdAsync(command.Id);
              _writeRepository.Remove(value);
+            await _writeRepository.SaveAsync();
         }
 
     }

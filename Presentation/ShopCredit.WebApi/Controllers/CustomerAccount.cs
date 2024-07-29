@@ -35,7 +35,7 @@ namespace ShopCredit.WebApi.Controllers
         }   
 
         [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetCustomerAccount(int customerId)
+        public async Task<IActionResult> GetCustomerAccount(Guid customerId)
         {
             var values = await _getCustomerAccountByIdQueryHandler.Handle(new GetCustomerAccountByIdQuery(customerId));
             return Ok(values);
@@ -59,7 +59,7 @@ namespace ShopCredit.WebApi.Controllers
 
         [HttpDelete]
 
-        public async Task<IActionResult> RemoveCustomerAccount(int id)
+        public async Task<IActionResult> RemoveCustomerAccount(Guid id)
         {
             await _removeCustomerAccountCommandHandler.Handle(new RemoveCustomerAccountCommand(id));
             return Ok("Müşteri Hesabı Silindi");

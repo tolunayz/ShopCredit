@@ -8,10 +8,8 @@ namespace ShopCredit.Application.CQRS.Commands.AdminCommands
 {
     public class CreateAdminCommand
     {
-
         public required string AdminName { get; set; }
 
         public required string AdminPassword { get; set; }
-
     }
 }

@@ -1,17 +1,36 @@
 ﻿using ShopCredit.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Entities
 {
-    public class Admin:BaseEntity
+    public class Admin : BaseEntity
     {
 
-        public required string AdminName { get; set; }
 
-        public required string AdminPassword { get; set; }
+        public string AdminName { get; private set; }
+        public string AdminPassword { get; private set; }
+
+        /// <summary>
+        /// Admin Constructer
+        /// </summary>
+        /// <param name="adminName"></param>
+        /// <param name="adminPassword"></param>
+        public Admin()
+        {
+           
+        }
+        /// <summary>
+        /// Admin propertyleri
+        /// </summary>
+        /// <param name="adminName"></param>
+        /// <param name="adminPassword"></param>
+        public void AdminProperties(string adminName, string adminPassword)
+        {
+
+            BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
+            //Id = Guid.NewGuid();
+            //CreatedDate = DateTime.Now;
+            AdminName = adminName;
+            AdminPassword = adminPassword;
+        }
     }
 }

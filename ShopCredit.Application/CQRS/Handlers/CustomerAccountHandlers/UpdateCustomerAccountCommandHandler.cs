@@ -15,42 +15,31 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
     {
         private readonly IWriteRepository<CustomerAccount> _writeRepository;
         private readonly IReadRepository<CustomerAccount> _readRepository;
+        private readonly IReadRepository<Customer> _customerReadRepository;
 
-        public UpdateCustomerAccountCommandHandler(IWriteRepository<CustomerAccount> writeRepository, IReadRepository<CustomerAccount> readRepository)
+        public UpdateCustomerAccountCommandHandler(IWriteRepository<CustomerAccount> writeRepository, IReadRepository<CustomerAccount> readRepository, IReadRepository<Customer> customerReadRepository)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
+            _customerReadRepository = customerReadRepository;
         }
 
         public async Task Handle(UpdateCustomerAccountCommand command)
         {
-            var values = await _readRepository.GetByIdAsync(command.CustomerID);
-           
-            values.DebtDate= command.DebtDate;
-            values.Description= command.Description;
-            values.IsPaid= command.IsPaid;
+            var values = await _readRepository.GetByIdAsync(command.CustomerId);
+            var customer = await _customerReadRepository.GetByIdAsync(command.CustomerId);
+            values.CustomerAccountProperties
+                (
+                command.CustomerId,
+                command.IsPaid,
+                command.Description,
+                command.CurrentDebt,             
+                command.Debt,
+                command.PaidDebt
+                );
            
             await _writeRepository.Update(values);
+            await _writeRepository.SaveAsync();
         }
     }
 }
-
-//public int AccountId { get; set; }
-
-//public int CustomerID { get; set; }
-
-//public required string Name { get; set; }
-
-//public required string Surname { get; set; }
-
-//public required int PhoneNumber { get; set; }
-
-//public string? Email { get; set; }
-
-//public string? Address { get; set; }
-
-//public DateTime DebtDate { get; set; }
-
-//public Boolean IsPaid { get; set; }
-
-//public required string Description { get; set; }

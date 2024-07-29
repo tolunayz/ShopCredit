@@ -8,10 +8,13 @@ namespace ShopCredit.Domain.Entities.Base
 {
     public class BaseEntity
     {
-        public Guid Id { get; set; }
+        protected void BaseEntityPropertys(Guid ıd, DateTime createdDate)
+        {
+            Id = ıd;
+            CreatedDate = createdDate;
+        }
 
-        public DateTime CreatedDate { get; set; }
-
-        public String CreatedBy { get; set; }
+        public Guid Id { get; private set; }
+        public DateTime CreatedDate { get; private set; }
     }
 }

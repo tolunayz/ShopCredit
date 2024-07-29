@@ -9,14 +9,13 @@ namespace ShopCredit.Application.CQRS.Results.CustomerResults
 {
     public class GetCustomerQueryResult
     {
+        public Guid Id { get; set; }
 
-        public int CustomerID { get; set; }
+        public  string? Name { get; set; }
 
-        public required string Name { get; set; }
+        public  string? Surname { get; set; }
 
-        public required string Surname { get; set; }
-
-        public required int PhoneNumber { get; set; }
+        public  int? PhoneNumber { get; set; }
 
         public string? Email { get; set; }
 

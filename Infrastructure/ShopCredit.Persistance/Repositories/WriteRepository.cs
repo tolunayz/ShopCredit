@@ -12,7 +12,7 @@ namespace ShopCredit.Infrastructure.Repositories
 {
     public class WriteRepository<T> : IWriteRepository<T> where T : class
     {
-       private readonly ShopCreditContext _context;
+        private readonly ShopCreditContext _context;
 
         public WriteRepository(ShopCreditContext context)
         {
@@ -23,7 +23,7 @@ namespace ShopCredit.Infrastructure.Repositories
 
         public async Task<bool> CreateAsync(T entity)
         {
-           EntityEntry<T> entityEntry = await Table.AddAsync(entity);
+            EntityEntry<T> entityEntry = await Table.AddAsync(entity);
             return entityEntry.State == EntityState.Added;
         }
 
@@ -31,9 +31,9 @@ namespace ShopCredit.Infrastructure.Repositories
         {
             await Table.AddRangeAsync(entity);
             return true;
-        }   
-      
-        public bool  Remove(T entity)
+        }
+
+        public bool Remove(T entity)
         {
             EntityEntry<T> entityEntry = Table.Remove(entity);
             return entityEntry.State != EntityState.Deleted;
@@ -42,21 +42,19 @@ namespace ShopCredit.Infrastructure.Repositories
         public bool RemoveById(string id)
         {
             _context.Set<T>().Remove(_context.Set<T>().Find(id));
-            _context.SaveChanges();
             return true;
         }
 
         public Task<bool> Update(T entity)
         {
-            throw new NotImplementedException();
-        }
-        
-        public Task<int> SaveAsync()
-        {
-            throw new NotImplementedException();
+            EntityEntry<T> entityEntry = Table.Update(entity);
+            return Task.FromResult(entityEntry.State == EntityState.Modified);
         }
 
-       
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
     }
-    }
+}
 

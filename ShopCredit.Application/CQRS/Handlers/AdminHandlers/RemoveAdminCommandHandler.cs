@@ -17,7 +17,7 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
 
         public RemoveAdminCommandHandler
             (
-            IReadRepository<Admin> readRepository, 
+            IReadRepository<Admin> readRepository,
             IWriteRepository<Admin> writeRepository
             )
         {
@@ -28,7 +28,8 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
         public async Task Handle(RemoveAdminCommand command)
         {
             var value = await _readRepository.GetByIdAsync(command.Id);
-             _writeRepository.Remove(value);
+            _writeRepository.Remove(value);
+            await _writeRepository.SaveAsync();
         }
     }
 }

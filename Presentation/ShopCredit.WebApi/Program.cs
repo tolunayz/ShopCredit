@@ -1,6 +1,5 @@
 using ShopCredit.Application.CQRS.Handlers.AdminHandlers;
 using ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers;
-using ShopCredit.Application.CQRS.Handlers.CustomerAccPaymentHandlers;
 using ShopCredit.Application.CQRS.Handlers.CustomerHandlers;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Infrastructure.Context;
@@ -12,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ShopCreditContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+builder.Services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
 //Customer Builder
 builder.Services.AddControllers();
@@ -32,12 +33,8 @@ builder.Services.AddScoped<GetCustomerAccountQueryHandler>();
 builder.Services.AddScoped<CreateCustomerAccountCommandHandler>();
 builder.Services.AddScoped<RemoveCustomerAccountCommandHandler>();
 builder.Services.AddScoped<UpdateCustomerAccountCommandHandler>();
-//Customer Payment Builder
-builder.Services.AddScoped<GetCustomerAccPaymentByIdQueryHandler>();
-builder.Services.AddScoped<GetCustomerAccPaymentQueryHandler>();
-builder.Services.AddScoped<CreateCustomerAccPaymentCommandHandler>();
-builder.Services.AddScoped<UpdateCustomerAccPaymentCommandHandler>();
-builder.Services.AddScoped<RemoveCustomerAccPaymentCommandHandler>();
+
+
 
 
 

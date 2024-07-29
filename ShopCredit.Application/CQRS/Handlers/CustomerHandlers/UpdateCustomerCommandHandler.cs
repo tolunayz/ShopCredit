@@ -27,13 +27,23 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
         }
         public async Task Handle(UpdateCustomerCommand command)
         {
+
+
+            //var values = await _readRepository.GetByIdAsync(command.AdminId);
+            //values.AdminProperties(command.AdminName, command.AdminPassword);
             var values = await _readRepository.GetByIdAsync(command.CustomerID);
-            values.Name = command.Name;
-            values.Surname = command.Surname;
-            values.Email = command.Email;
-            values.PhoneNumber = command.PhoneNumber;
-            values.Address = command.Address;
+            values.CustomerProperties
+                (
+                    command.Name,
+                    command.Surname,
+                    command.PhoneNumber,
+                    command.Email,                    
+                    command.Address
+                    
+                );
+          
             await _writeRepository.Update(values);
+            await _writeRepository.SaveAsync();
         }
     }
 }

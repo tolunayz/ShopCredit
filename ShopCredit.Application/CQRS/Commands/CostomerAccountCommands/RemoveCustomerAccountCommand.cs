@@ -8,9 +8,9 @@ namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
 {
     public class RemoveCustomerAccountCommand
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public RemoveCustomerAccountCommand(int id)
+        public RemoveCustomerAccountCommand(Guid id)
         {
             Id = id;
         }

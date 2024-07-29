@@ -25,7 +25,7 @@ namespace ShopCredit.Infrastructure.Repositories
          public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> method)
             => await Table.FirstOrDefaultAsync(method);
 
-         public async Task<T?> GetByIdAsync(int id)
+         public async Task<T?> GetByIdAsync(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
         }

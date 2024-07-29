@@ -2,9 +2,9 @@
 {
     public class GetCustomerAccountByIdQuery
     {
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
-        public GetCustomerAccountByIdQuery(int customerId)
+        public GetCustomerAccountByIdQuery(Guid customerId)
         {
             CustomerId = customerId;
         }

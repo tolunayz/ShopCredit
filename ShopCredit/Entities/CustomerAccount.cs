@@ -1,29 +1,52 @@
 ﻿using ShopCredit.Domain.Entities;
 using ShopCredit.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ShopCredit.Entities;
 
 namespace ShopCredit.Entities
 {
     public class CustomerAccount: BaseEntity
     {
-      
+        public Guid CustomerId { get; set; }
 
-        public int CustomerID { get; set; }
+        public bool IsPaid { get; private set; }
 
-        public DateTime DebtDate { get; set; }
+        public string? Description { get; private set; }
 
-        public Boolean IsPaid { get; set; }
+        public int CurrentDebt { get; private set; } //**
 
-        public required string Description { get; set; }
+        public int Debt { get; private set; }   //**
 
-        public virtual Customer Customer { get; set; }
+        public int PaidDebt { get; private set; }   //**
 
-        public virtual CustomerAccPayment CustomerAccPayment { get; set; }
+        public virtual Customer Customer { get;  set; }
+
+        /// <summary>
+        /// CustomerAccount Constructer'ı
+        /// </summary>
+        public CustomerAccount() { }
+
+        /// <summary>
+        /// Customer Acoount Propertyleri
+        /// </summary>
+        /// <param name="isPaid"></param>
+        /// <param name="description"></param>
+        /// <param name="currentDebt"></param>
+        /// <param name="debt"></param>
+        /// <param name="paidDebt"></param>
+        /// 
+
+        public void CustomerAccountProperties(Guid customerId,bool isPaid, string? description, int currentDebt, int debt, int paidDebt)
+        {
+            BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
+            CustomerId = customerId;
+            IsPaid = isPaid;
+            Description = description;
+            CurrentDebt = currentDebt;
+            Debt = debt;
+            PaidDebt = paidDebt;
+        }
+
+        
     }
 }
+

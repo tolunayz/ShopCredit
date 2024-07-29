@@ -10,6 +10,6 @@ namespace ShopCredit.Application.Interfaces
 
         Task<T?> GetSingleAsync(Expression<Func<T, bool>> method);
 
-        Task<T?> GetByIdAsync(int id);
+        Task<T?> GetByIdAsync(Guid Id);
     }
 }

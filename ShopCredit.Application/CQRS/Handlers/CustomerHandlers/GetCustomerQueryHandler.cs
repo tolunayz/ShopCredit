@@ -1,4 +1,5 @@
-﻿using ShopCredit.Application.CQRS.Results.CustomerResults;
+﻿using ShopCredit.Application.CQRS.Results.AdminResults;
+using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 
@@ -6,12 +7,12 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
     public class GetCustomerQueryHandler
     {
-        private readonly IRepository<Customer> _repository;
+        
         private readonly IReadRepository<Customer> _readRepository;
 
-        public GetCustomerQueryHandler(IRepository<Customer> repository, IReadRepository<Customer> readRepository)
+        public GetCustomerQueryHandler(IReadRepository<Customer> readRepository)
         {
-            _repository = repository;
+          
             _readRepository = readRepository;
         }
 
@@ -21,7 +22,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             var values = _readRepository.GetAll();
             return values.Select(x => new GetCustomerQueryResult
             {
-                CustomerID = x.CustomerID,
+                Id= x.Id,
                 Name = x.Name,
                 Surname = x.Surname,
                 PhoneNumber = x.PhoneNumber,
@@ -31,8 +32,19 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             }
             ).ToList();
 
-
+            //public async Task<List<GetAdminQueryResult>> Handle()
+            //{
+            //    var values = _readRepository.GetAll();
+            //    return values.Select(x => new GetAdminQueryResult
+            //    {
+            //        Id = x.Id,
+            //        AdminName = x.AdminName,
+            //        AdminPassword = x.AdminPassword
+            //    }).ToList();
+            //}
         }
+
+    }
 
 
 
@@ -41,4 +53,4 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
 
 
-}
+
