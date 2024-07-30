@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace ShopCredit.Application.CQRS.Commands.AdminCommands
 {
-    public class RemoveAdminCommand
+    public class RemoveAdminCommand : IRequest
     {
         public Guid Id { get; set; }
 

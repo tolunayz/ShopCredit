@@ -1,10 +1,11 @@
-﻿using ShopCredit.Application.CQRS.Commands.CustomerCommands;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class CreateCustomerCommandHandler
+    public class CreateCustomerCommandHandler :IRequestHandler<CreateCustomerCommand,bool>
     {
         private readonly IWriteRepository<Customer> _writeRepository;
 
@@ -14,16 +15,17 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             _writeRepository = writerRepository;
         }
 
-        public async Task Handle(CreateCustomerCommand command)
+        public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             await _writeRepository.CreateAsync(Customer.Create(
-                name: command.Name,
-                surname: command.Surname,
-                phoneNumber: command.PhoneNumber,
-                email: command.Email
-            ).SetAddress(address:command.Address));
+            name: request.Name,
+               surname: request.Surname,
+               phoneNumber: request.PhoneNumber,
+               email: request.Email
+           ).SetAddress(address: request.Address));
             await _writeRepository.SaveAsync();
+
+            return true;
         }
-      
     }
 }

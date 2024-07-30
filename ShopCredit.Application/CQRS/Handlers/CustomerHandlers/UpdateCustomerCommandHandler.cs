@@ -1,4 +1,5 @@
-﻿using ShopCredit.Application.CQRS.Commands.CustomerCommands;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using System;
@@ -6,17 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class UpdateCustomerCommandHandler
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand>
     {
         private readonly IRepository<Customer> _repository;
         private readonly IWriteRepository<Customer> _writeRepository;
         private readonly IReadRepository<Customer> _readRepository;
 
         public UpdateCustomerCommandHandler
-            (IRepository<Customer> repository, 
+            (IRepository<Customer> repository,
             IReadRepository<Customer> readRepository,
             IWriteRepository<Customer> writeRepository
             )
@@ -25,23 +27,23 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             _readRepository = readRepository;
             _writeRepository = writeRepository;
         }
-        public async Task Handle(UpdateCustomerCommand command)
+        public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-
 
             //var values = await _readRepository.GetByIdAsync(command.AdminId);
             //values.AdminProperties(command.AdminName, command.AdminPassword);
-            var values = await _readRepository.GetByIdAsync(command.CustomerID);
+
+            var values = await _readRepository.GetByIdAsync(request.CustomerID);
             values.CustomerProperties
-                (
-                    command.Name,
-                    command.Surname,
-                    command.PhoneNumber,
-                    command.Email,                    
-                    command.Address
-                    
+            (
+                    request.Name,
+                    request.Surname,
+                    request.PhoneNumber,
+                    request.Email,
+                    request.Address
+
                 );
-          
+
             await _writeRepository.Update(values);
             await _writeRepository.SaveAsync();
         }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Results.CustomerResults;
 
 namespace ShopCredit.Application.CQRS.Queries
 {
-    public class GetCustomerByIdQuery
+    public class GetCustomerByIdQuery : IRequest<GetCustomerByIdQueryResult>
     {
         public GetCustomerByIdQuery(Guid id)
         {

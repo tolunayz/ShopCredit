@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ShopCredit.Application.CQRS.Commands.AdminCommands;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
-using ShopCredit.Application.CQRS.Handlers.AdminHandlers;
-using ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers;
 using ShopCredit.Application.CQRS.Queries;
+using ShopCredit.Application.CQRS.Queries.CustomerAccountQueries;
 
 namespace ShopCredit.WebApi.Controllers
 {
@@ -12,48 +10,33 @@ namespace ShopCredit.WebApi.Controllers
     [ApiController]
     public class CustomerAccount : ControllerBase
     {
-        private readonly CreateCustomerAccountCommandHandler _createCustomerAccountCommandHandler;
-        private readonly GetCustomerAccountByIdQueryHandler _getCustomerAccountByIdQueryHandler;
-        private readonly GetCustomerAccountQueryHandler _getCustomerAccountQueryHandler;
-        private readonly UpdateCustomerAccountCommandHandler _updateCustomerAccountCommandHandler;
-        private readonly RemoveCustomerAccountCommandHandler _removeCustomerAccountCommandHandler;
+        private readonly IMediator _mediator;
 
-        public CustomerAccount
-        (
-            CreateCustomerAccountCommandHandler createCustomerAccountCommandHandler, 
-            GetCustomerAccountByIdQueryHandler getCustomerAccountByIdQueryHandler,
-            GetCustomerAccountQueryHandler getCustomerAccountQueryHandler,
-            UpdateCustomerAccountCommandHandler updateCustomerAccountCommandHandler,
-            RemoveCustomerAccountCommandHandler removeCustomerAccountCommandHandler
-        )
+        public CustomerAccount(IMediator mediator)
         {
-            _createCustomerAccountCommandHandler = createCustomerAccountCommandHandler;
-            _getCustomerAccountByIdQueryHandler = getCustomerAccountByIdQueryHandler;
-            _getCustomerAccountQueryHandler = getCustomerAccountQueryHandler;
-            _updateCustomerAccountCommandHandler = updateCustomerAccountCommandHandler;
-            _removeCustomerAccountCommandHandler = removeCustomerAccountCommandHandler;
-        }   
+            _mediator = mediator;
+        }
 
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerAccount(Guid customerId)
         {
-            var values = await _getCustomerAccountByIdQueryHandler.Handle(new GetCustomerAccountByIdQuery(customerId));
-            return Ok(values);
+            var getCustomerById = await _mediator.Send(new GetCustomerAccountByIdQuery(customerId));
+            return Ok(getCustomerById);
         }
 
         [HttpGet]
 
         public async Task<IActionResult> CustomerAccountList()
         {
-            var values = await _getCustomerAccountQueryHandler.Handle();
-            return Ok(values);
+            var getCustomerAccount = await _mediator.Send(new GetCustomerAccountQuery());
+            return Ok(getCustomerAccount);
         }
 
         [HttpPost]
 
         public async Task<IActionResult> CreateCustomerAccount(CreateCustomerAccountCommand command)
         {
-            await _createCustomerAccountCommandHandler.Handle(command);
+            await _mediator.Send(command);
             return Ok("Müşteri Hesabı Oluşturuldu");
         }
 
@@ -61,7 +44,7 @@ namespace ShopCredit.WebApi.Controllers
 
         public async Task<IActionResult> RemoveCustomerAccount(Guid id)
         {
-            await _removeCustomerAccountCommandHandler.Handle(new RemoveCustomerAccountCommand(id));
+            await _mediator.Send(new RemoveCustomerAccountCommand(id));
             return Ok("Müşteri Hesabı Silindi");
         }
 
@@ -69,7 +52,7 @@ namespace ShopCredit.WebApi.Controllers
 
         public async Task<IActionResult> UpdateCustomerAccount(UpdateCustomerAccountCommand command)
         {
-            await _updateCustomerAccountCommandHandler.Handle(command);
+            await _mediator.Send(command);
             return Ok("Hesap Bilgileri Güncellendi");
         }
     }

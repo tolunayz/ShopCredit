@@ -1,4 +1,5 @@
-﻿using ShopCredit.Domain.Entities;
+﻿using MediatR;
+using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
 {
-    public class UpdateCustomerAccountCommand
+    public class UpdateCustomerAccountCommand : IRequest
     {
         public Guid AccountId { get; set; }
 

@@ -1,11 +1,12 @@
-﻿using ShopCredit.Application.CQRS.Queries;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Queries.AminQueries;
 using ShopCredit.Application.CQRS.Results.AdminResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
 {
-    public class GetAdminByIdQueryHandler
+    public class GetAdminByIdQueryHandler : IRequestHandler<GetAdminByIdQuery, GetAdminByIdQueryResult>
     {
         private readonly IReadRepository<Admin> _readRepository;
 
@@ -14,9 +15,9 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
             _readRepository = readRepository;
         }
 
-        public async Task<GetAdminByIdQueryResult> Handle(GetAdminByIdQuery query)
+        public async Task<GetAdminByIdQueryResult> Handle(GetAdminByIdQuery request, CancellationToken cancellationToken)
         {
-            var values = await _readRepository.GetByIdAsync(query.Id);
+            var values = await _readRepository.GetByIdAsync(request.Id);
             return new GetAdminByIdQueryResult
             {
                 AdminName = values.AdminName,

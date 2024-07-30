@@ -1,12 +1,11 @@
-﻿using ShopCredit.Application.CQRS.Queries;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Queries;
 using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
-using ShopCredit.Domain.Entities;
-using System.Diagnostics;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class GetCustomerByIdQueryHandler
+    public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdQueryResult> 
     {
 
         private readonly ICustomerAndAccountRepository _customerAndAccountRepository;
@@ -21,24 +20,24 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             _customerAndAccountRepository = customerAndAccountRepository;
         }
 
-        public async Task<GetCustomerByIdQueryResult> Handle(GetCustomerByIdQuery query)
+        public async Task<GetCustomerByIdQueryResult> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var values = await _customerAndAccountRepository.GetCustomerByIdWithAccountsAsync(query.Id);
+                var values = await _customerAndAccountRepository.GetCustomerByIdWithAccountsAsync(request.Id);
 
                 if (values == null)
                 {
-                    throw new KeyNotFoundException($"{query.Id} Bu Id ye sahip kullanıcı bulunamadı!");
+                    throw new KeyNotFoundException($"{request.Id} Bu Id ye sahip kullanıcı bulunamadı!");
                 }
 
                 return new GetCustomerByIdQueryResult
                 {
-                    CustomerID= values.Id,
+                    CustomerID = values.Id,
                     Name = values.Name,
                     Surname = values.Surname,
                     PhoneNumber = values.PhoneNumber,
-                    Email=values.Email,
+                    Email = values.Email,
                     Address = values.Address,
 
                     CustomerAccounts = values.CustomerAccounts.Select(ca => new CustomerAccountResultById()
@@ -49,15 +48,10 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
                     }).ToList() // CustomerAccount Id'leri ekleniyor
                 };
             }
-            catch (KeyNotFoundException ex)
-            {
-                throw;
-            }
             catch (Exception ex)
             {
                 throw new ApplicationException("An error occurred while getting the customer by ID.", ex);
             }
         }
-
     }
 }

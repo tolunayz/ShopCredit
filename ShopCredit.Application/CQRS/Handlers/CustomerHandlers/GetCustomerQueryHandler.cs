@@ -1,45 +1,48 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class GetCustomerQueryHandler
+    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, GetCustomerQueryResult>
     {
         private readonly IReadRepository<Customer> _readRepository;
-
 
         public GetCustomerQueryHandler(IReadRepository<Customer> readRepository)
         {
             _readRepository = readRepository;
         }
 
-        public async Task<List<GetCustomerQueryResult>> Handle()
+        public async Task<GetCustomerQueryResult> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
-            var customers = await _readRepository.GetAll()
-                .Include(c => c.CustomerAccounts)
-                .ToListAsync();
+            var customer = await _readRepository.GetAll()
+              .Include(c => c.CustomerAccounts)
+              .FirstOrDefaultAsync();
 
-     //       query.Include(x => x.Collection)
-     //       .ThenInclude(x => x.Property);
-            return customers.Select(x => new GetCustomerQueryResult
+            if (customer == null)
             {
-                Id = x.Id,
-                Name = x.Name,
-                Surname = x.Surname,
-                PhoneNumber = x.PhoneNumber,
-                Email = x.Email,
-                Address = x.Address,
-                CustomerAccounts = x.CustomerAccounts.Select(ca => new CustomerAccountResult()
+                return null; // veya uygun bir hata durumu döndürebilirsiniz
+            }
+
+            return new GetCustomerQueryResult
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Surname = customer.Surname,
+                PhoneNumber = customer.PhoneNumber,
+                Email = customer.Email,
+                Address = customer.Address,
+                CustomerAccounts = customer.CustomerAccounts.Select(ca => new CustomerAccountResult
                 {
                     AccountId = ca.Id
-                }).ToList() // CustomerAccount Id'leri ekleniyor
-            }).ToList();
+                }).ToList()
+            };
         }
     }
 }

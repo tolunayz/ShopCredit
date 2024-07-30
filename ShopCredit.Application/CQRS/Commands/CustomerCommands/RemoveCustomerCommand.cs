@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 {
-    public class RemoveCustomerCommand
+    public class RemoveCustomerCommand : IRequest
     {
         public Guid Id { get; set; }
 

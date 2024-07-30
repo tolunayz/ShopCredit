@@ -1,12 +1,14 @@
-﻿using ShopCredit.Application.CQRS.Queries;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Queries;
 using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
+using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
-    public class GetCustomerAccountByIdQueryHandler
+    public class GetCustomerAccountByIdQueryHandler :  IRequestHandler<GetCustomerAccountByIdQuery, GetCustomerAccountByIdQueryResult> 
     {
         private readonly IReadRepository<Customer> _customerRepository;
         private readonly IReadRepository<CustomerAccount> _customerAccountRepository;
@@ -22,11 +24,13 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
             _customerRepository = customerRepository;
         }
 
-        public async Task<GetCustomerAccountByIdQueryResult> Handle(GetCustomerAccountByIdQuery query)
+     
+
+        public async Task<GetCustomerAccountByIdQueryResult> Handle(GetCustomerAccountByIdQuery request, CancellationToken cancellationToken)
         {
-            var accountList =  _customerAccountRepository.GetAll();
-            var account = accountList.FirstOrDefault(x => x.Customer.Id == query.CustomerId);
-            var customer = await _customerRepository.GetByIdAsync(query.CustomerId);
+            var accountList = _customerAccountRepository.GetAll();
+            var account = accountList.FirstOrDefault(x => x.Customer.Id == request.CustomerId);
+            var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
 
             return new GetCustomerAccountByIdQueryResult
             {

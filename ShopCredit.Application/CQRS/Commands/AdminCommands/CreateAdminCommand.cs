@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace ShopCredit.Application.CQRS.Commands.AdminCommands
 {
-    public class CreateAdminCommand
+    public class CreateAdminCommand: IRequest<Guid>
     {
         public required string AdminName { get; set; }
 

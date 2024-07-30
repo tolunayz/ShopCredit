@@ -1,6 +1,8 @@
-﻿namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
+﻿using MediatR;
+
+namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
 {
-    public class CreateCustomerAccountCommand
+    public class CreateCustomerAccountCommand : IRequest<Guid>
     {
 
         //public DateTime DebtDate { get; set; }

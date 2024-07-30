@@ -1,12 +1,16 @@
-﻿using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using ShopCredit.Application.CQRS.Queries.CustomerAccountQueries;
+using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
-    public class GetCustomerAccountQueryHandler
+    public class GetCustomerAccountQueryHandler : IRequestHandler<GetCustomerAccountQuery, List<GetCustomerAccountQuerytResults>>
     {
+
         private readonly IReadRepository<CustomerAccount> _readRepository;
         private readonly IReadRepository<Customer> _customerReadRepository;
 
@@ -19,18 +23,17 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
             _customerReadRepository = customerReadRepository;
         }
 
-        public async Task<List<GetCustomerAccountByIdQueryResult>> Handle()
+        public async Task<List<GetCustomerAccountQuerytResults>> Handle(GetCustomerAccountQuery request, CancellationToken cancellationToken)
         {
             var accounts = _readRepository.GetAll();
             var customers = _customerReadRepository.GetAll();
 
-            return accounts.Select(x => new GetCustomerAccountByIdQueryResult
+            return await accounts.Select(x => new GetCustomerAccountQuerytResults
             {
-               
                 AccountId = x.Id,
                 Description = x.Description,
                 IsPaid = x.IsPaid,
-                CustomerResult = new CustomerResult
+                Customer = new CustomerResults          
                 {
                     Id = x.Customer.Id,
                     Address = x.Customer.Address,
@@ -38,8 +41,8 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
                     Name = x.Customer.Name,
                     PhoneNumber = x.Customer.PhoneNumber,
                     Surname = x.Customer.Surname
-                },
-            }).ToList();
+                }
+            }).ToListAsync();
         }
     }
 }

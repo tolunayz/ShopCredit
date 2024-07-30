@@ -1,4 +1,5 @@
-﻿using ShopCredit.Application.CQRS.Commands.AdminCommands;
+﻿using MediatR;
+using ShopCredit.Application.CQRS.Commands.AdminCommands;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
@@ -8,10 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
-    public class RemoveCustomerAccountCommandHandler
+    public class RemoveCustomerAccountCommandHandler : IRequestHandler<RemoveCustomerAccountCommand> 
     {
         private readonly IWriteRepository<CustomerAccount>? _writeRepository;
         private readonly IReadRepository<CustomerAccount>? _readRepository;
@@ -29,16 +31,14 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
             _readRepository = readRepository;
         }
 
-        public async Task Handle(RemoveCustomerAccountCommand command)
+        public async Task Handle(RemoveCustomerAccountCommand request, CancellationToken cancellationToken)
         {
-            var value = await _readRepository.GetByIdAsync(command.Id);
-            var customer = await _customerReadRepository.GetByIdAsync(command.Id);
+
+            var value = await _readRepository.GetByIdAsync(request.Id);
+            var customer = await _customerReadRepository.GetByIdAsync(request.Id);
             _writeRepository.Remove(value);
             _customerWriteRepository.Remove(customer);
             await _writeRepository.SaveAsync();
         }
-       
-
-
     }
 }

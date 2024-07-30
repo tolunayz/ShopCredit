@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.CQRS.Handlers.CustomerHandlers;
 using ShopCredit.Application.CQRS.Queries;
+using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 
 namespace ShopCredit.WebApi.Controllers
 {
@@ -9,32 +11,18 @@ namespace ShopCredit.WebApi.Controllers
     [ApiController]
     public class Customers : ControllerBase
     {
-        private readonly CreateCustomerCommandHandler _createCustomerCommandHandler;
-        private readonly GetCustomerByIdQueryHandler _getCustomerByIdQueryHandler;
-        private readonly GetCustomerQueryHandler _getCustomerQueryHandler;
-        private readonly UpdateCustomerCommandHandler _updateCustomerCommandHandler;
-        private readonly RemoveCustomerCommandHandler _removeCustomerCommandHandler;
-        
-
-        public Customers
-            (CreateCustomerCommandHandler createCustomerCommandHandler,
-            GetCustomerByIdQueryHandler getCustomerByIdQueryHandler,
-            GetCustomerQueryHandler getCustomerQueryHandler,
-            UpdateCustomerCommandHandler updateCustomerCommandHandler, 
-            RemoveCustomerCommandHandler removeCustomerCommandHandler
-            )
+        private readonly IMediator _mediator;
+        public Customers(IMediator mediator)
         {
-            this._createCustomerCommandHandler = createCustomerCommandHandler;
-            this._getCustomerByIdQueryHandler = getCustomerByIdQueryHandler;
-            this._getCustomerQueryHandler = getCustomerQueryHandler;
-            this._updateCustomerCommandHandler = updateCustomerCommandHandler;
-            this._removeCustomerCommandHandler = removeCustomerCommandHandler;
+            _mediator = mediator;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(Guid id)
         {
-            var values = await _getCustomerByIdQueryHandler.Handle(new GetCustomerByIdQuery(id));
+
+            var values = await _mediator.Send(new GetCustomerByIdQuery(id));
+            //var values = await _getCustomerByIdQueryHandler.Handle(new GetCustomerByIdQuery(id));
             return Ok(values);
         }
 
@@ -42,7 +30,7 @@ namespace ShopCredit.WebApi.Controllers
 
         public async Task<IActionResult> CustomerList()
         {
-            var values = await _getCustomerQueryHandler.Handle();
+            var values = await _mediator.Send(new GetCustomerQuery());
             return Ok(values);
         }
 
@@ -50,7 +38,7 @@ namespace ShopCredit.WebApi.Controllers
 
         public async Task<IActionResult> CreateCustomer(CreateCustomerCommand command)
         {
-            await _createCustomerCommandHandler.Handle(command);
+            await _mediator.Send(command);
             return Ok("Müşteri Eklendi");
         }
 
@@ -58,7 +46,7 @@ namespace ShopCredit.WebApi.Controllers
 
         public async Task<IActionResult> RemoveCustomer(Guid id)
         {
-            await _removeCustomerCommandHandler.Handle(new RemoveCustomerCommand(id));
+            await _mediator.Send(new RemoveCustomerCommand(id));
             return Ok("Müşteri Kaldırıldı");
         }
 
@@ -66,11 +54,11 @@ namespace ShopCredit.WebApi.Controllers
 
         public async Task<IActionResult> UpdateCustomer(UpdateCustomerCommand command)
         {
-            await _updateCustomerCommandHandler.Handle(command);
+            await _mediator.Send(command);
             return Ok("Müşteri Bilgileri Güncellendi");
         }
 
 
-       
+
     }
 }
