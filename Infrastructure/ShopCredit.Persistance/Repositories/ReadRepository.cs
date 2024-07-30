@@ -29,5 +29,9 @@ namespace ShopCredit.Infrastructure.Repositories
         {
             return await _context.Set<T>().FindAsync(id);
         }
+        public IQueryable<T> GetByIdQueryable(Guid id)
+        {
+            return Table;
+        }
     }
 }

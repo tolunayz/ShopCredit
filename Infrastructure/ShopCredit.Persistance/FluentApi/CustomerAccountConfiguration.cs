@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Infrastructure.FluentApi
 {
@@ -14,28 +8,30 @@ namespace ShopCredit.Infrastructure.FluentApi
     {
         public void Configure(EntityTypeBuilder<CustomerAccount> builder)
         {
-            builder.Property(s => s.Id)
-             .IsRequired();
-
             builder.HasKey(s => s.Id);
 
+            builder.Property(s => s.Id)
+                .IsRequired();
+
             builder.Property(s => s.CreatedDate)
-             .IsRequired();
+                .IsRequired();
 
             builder.Property(s => s.IsPaid)
-           .IsRequired()
-           .HasDefaultValue(false);// Default olarak ödenmemiş olacak.
+                .IsRequired()
+                .HasDefaultValue(false);// Default olarak ödenmemiş olacak.
 
             builder.Property(s => s.Description)
                 .IsRequired()
-                .HasMaxLength(300);
+                .HasMaxLength(666);
 
             builder.Property(s => s.CurrentDebt)
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.HasOne(c => c.Customer)
+                .WithMany(ca => ca.CustomerAccounts)
+                .HasForeignKey(c => c.CustomerId)
+                .IsRequired();
         }
-
-
     }
 }

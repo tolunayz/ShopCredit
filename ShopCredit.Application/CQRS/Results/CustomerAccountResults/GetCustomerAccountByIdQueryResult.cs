@@ -1,6 +1,4 @@
-﻿using ShopCredit.Application.CQRS.Results.CustomerResults;
-
-namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
+﻿namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 {
     public class GetCustomerAccountByIdQueryResult
     {
@@ -8,12 +6,26 @@ namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 
         public DateTime DebtDate { get; set; }
 
-        public Boolean IsPaid { get; set; }
+        public bool IsPaid { get; set; }
 
         public required string Description { get; set; }
         
-        public GetCustomerQueryResult? CustomerResult { get; set; }
-    
-        
+        public CustomerResult? CustomerResult { get; set; }
     }
+
+    public class CustomerResult
+    {
+        public Guid Id { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Surname { get; set; }
+
+        public int? PhoneNumber { get; set; }
+
+        public string? Email { get; set; }
+
+        public string? Address { get; set; }
+    }
+  
 }

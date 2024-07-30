@@ -5,7 +5,7 @@ namespace ShopCredit.Entities
     public class Admin : BaseEntity
     {
 
-
+        
         public string AdminName { get; private set; }
         public string AdminPassword { get; private set; }
 

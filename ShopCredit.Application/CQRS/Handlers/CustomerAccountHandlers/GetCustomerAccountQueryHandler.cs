@@ -30,7 +30,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
                 AccountId = x.Id,
                 Description = x.Description,
                 IsPaid = x.IsPaid,
-                CustomerResult = new Results.CustomerResults.GetCustomerQueryResult
+                CustomerResult = new CustomerResult
                 {
                     Id = x.Customer.Id,
                     Address = x.Customer.Address,

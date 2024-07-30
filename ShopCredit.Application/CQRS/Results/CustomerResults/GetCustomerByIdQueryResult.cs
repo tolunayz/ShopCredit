@@ -21,5 +21,12 @@ namespace ShopCredit.Application.CQRS.Results.CustomerResults
         public string? Email { get; set; }
 
         public string? Address { get; set; }
+
+        public List<CustomerAccountResultById> CustomerAccounts { get; set; } = new List<CustomerAccountResultById>();
+    }
+    public class CustomerAccountResultById
+    {
+        public Guid AccountId { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

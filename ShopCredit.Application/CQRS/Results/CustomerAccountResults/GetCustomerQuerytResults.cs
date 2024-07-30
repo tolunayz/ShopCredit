@@ -21,4 +21,5 @@ namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 
         public  string Description { get; set; }
     }
+  
 }

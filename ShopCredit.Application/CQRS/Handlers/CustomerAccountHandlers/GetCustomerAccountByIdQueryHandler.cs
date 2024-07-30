@@ -3,8 +3,6 @@ using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
-using System.Security.AccessControl;
-using System.Security.Principal;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
@@ -28,7 +26,6 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
         {
             var accountList =  _customerAccountRepository.GetAll();
             var account = accountList.FirstOrDefault(x => x.Customer.Id == query.CustomerId);
-
             var customer = await _customerRepository.GetByIdAsync(query.CustomerId);
 
             return new GetCustomerAccountByIdQueryResult
@@ -36,7 +33,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
                 AccountId = account.Id,
                 Description = account.Description,
                 IsPaid = account.IsPaid,
-                CustomerResult = new Results.CustomerResults.GetCustomerQueryResult
+                CustomerResult = new CustomerResult
                 {
                     Id = customer.Id,
                     Address = customer.Address,

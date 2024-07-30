@@ -12,8 +12,8 @@ using ShopCredit.Infrastructure.Context;
 namespace ShopCredit.Infrastructure.Migrations
 {
     [DbContext(typeof(ShopCreditContext))]
-    [Migration("20240726101257_PK_FK_Changes")]
-    partial class PK_FK_Changes
+    [Migration("20240729135549_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,22 +32,30 @@ namespace ShopCredit.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("PhoneNumber")
+                    b.Property<int>("PhoneNumber")
+                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -62,21 +70,23 @@ namespace ShopCredit.Infrastructure.Migrations
 
                     b.Property<string>("AdminName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("AdminPassword")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admin");
                 });
 
-            modelBuilder.Entity("ShopCredit.Entities.CustomerAccPayment", b =>
+            modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,70 +96,40 @@ namespace ShopCredit.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CurrentDebt")
+                        .HasMaxLength(100)
                         .HasColumnType("int");
-
-                    b.Property<Guid>("CustomerAccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("PaidDebt")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalDebt")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerAccountId")
-                        .IsUnique();
-
-                    b.ToTable("CustomerAccPaymentS");
-                });
-
-            modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DebtDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Debt")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(666)
+                        .HasColumnType("nvarchar(666)");
 
                     b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("PaidDebt")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("CustomersAccounts");
-                });
-
-            modelBuilder.Entity("ShopCredit.Entities.CustomerAccPayment", b =>
-                {
-                    b.HasOne("ShopCredit.Entities.CustomerAccount", "CustomerAccount")
-                        .WithOne("CustomerAccPayment")
-                        .HasForeignKey("ShopCredit.Entities.CustomerAccPayment", "CustomerAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CustomerAccount");
                 });
 
             modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
                 {
                     b.HasOne("ShopCredit.Domain.Entities.Customer", "Customer")
-                        .WithOne("CustomerAccount")
-                        .HasForeignKey("ShopCredit.Entities.CustomerAccount", "CustomerId")
+                        .WithMany("CustomerAccounts")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -158,14 +138,7 @@ namespace ShopCredit.Infrastructure.Migrations
 
             modelBuilder.Entity("ShopCredit.Domain.Entities.Customer", b =>
                 {
-                    b.Navigation("CustomerAccount")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ShopCredit.Entities.CustomerAccount", b =>
-                {
-                    b.Navigation("CustomerAccPayment")
-                        .IsRequired();
+                    b.Navigation("CustomerAccounts");
                 });
 #pragma warning restore 612, 618
         }

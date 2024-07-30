@@ -14,6 +14,7 @@ namespace ShopCredit.WebApi.Controllers
         private readonly GetCustomerQueryHandler _getCustomerQueryHandler;
         private readonly UpdateCustomerCommandHandler _updateCustomerCommandHandler;
         private readonly RemoveCustomerCommandHandler _removeCustomerCommandHandler;
+        
 
         public Customers
             (CreateCustomerCommandHandler createCustomerCommandHandler,

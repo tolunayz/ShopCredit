@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\ShopCredit.Application\ShopCredit.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

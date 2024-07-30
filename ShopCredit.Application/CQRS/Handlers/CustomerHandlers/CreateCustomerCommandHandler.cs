@@ -24,21 +24,6 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             ).SetAddress(address:command.Address));
             await _writeRepository.SaveAsync();
         }
-        //public CreateCustomerAccountCommandHandler(IRepository<CustomerAccount> repository)
-        //{
-        //    _repository = repository;
-        //}
-
-        //public async Task Handle(CreateCustomerAccountCommand command)
-        //{
-        //    await _repository.CreateAsync(new CustomerAccount
-        //    {
-        //        Customer = command.Customer,
-        //        DebtDate = command.DebtDate,
-        //        IsPaid = command.IsPaid,
-        //        Description = command.Description
-
-        //    });
-        //}
+      
     }
 }

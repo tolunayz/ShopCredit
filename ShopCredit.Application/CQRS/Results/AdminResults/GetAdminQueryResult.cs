@@ -12,4 +12,5 @@ namespace ShopCredit.Application.CQRS.Results.AdminResults
         public  string? AdminName { get; set; }
         public  string? AdminPassword { get; set; }
     }
+  
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopCredit.Application.CQRS.Results.CustomerResults
+﻿namespace ShopCredit.Application.CQRS.Results.CustomerResults
 {
     public class GetCustomerQueryResult
     {
@@ -20,5 +13,13 @@ namespace ShopCredit.Application.CQRS.Results.CustomerResults
         public string? Email { get; set; }
 
         public string? Address { get; set; }
+
+        public List<CustomerAccountResult> CustomerAccounts { get; set; } = new List<CustomerAccountResult>();
+    }
+
+    public class CustomerAccountResult
+    {
+        public Guid AccountId { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

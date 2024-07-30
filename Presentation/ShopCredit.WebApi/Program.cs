@@ -16,6 +16,8 @@ builder.Services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>)
 
 //Customer Builder
 builder.Services.AddControllers();
+builder.Services.AddScoped<ICustomerAndAccountRepository, CustomerAndAccount>();
+
 builder.Services.AddScoped<GetCustomerByIdQueryHandler>();
 builder.Services.AddScoped<GetCustomerQueryHandler>();
 builder.Services.AddScoped<CreateCustomerCommandHandler>();

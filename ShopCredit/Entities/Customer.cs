@@ -7,6 +7,7 @@ namespace ShopCredit.Domain.Entities
 {
     public class Customer : BaseEntity
     {
+
         public string Name { get; private set; }
 
         public string Surname { get; private set; }
@@ -21,7 +22,7 @@ namespace ShopCredit.Domain.Entities
 
         public Customer()
         {
-                
+            CustomerAccounts = new HashSet<CustomerAccount>();
         }
 
         /// <summary>

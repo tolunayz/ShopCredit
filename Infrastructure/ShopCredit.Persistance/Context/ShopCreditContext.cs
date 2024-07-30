@@ -2,6 +2,7 @@
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
 using ShopCredit.Infrastructure.FluentApi;
+using System.Reflection;
 
 namespace ShopCredit.Infrastructure.Context
 {
@@ -14,17 +15,10 @@ namespace ShopCredit.Infrastructure.Context
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerAccount> CustomersAccounts { get; set; }
-       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
-
-            modelBuilder.Entity<CustomerAccount>()
-                .HasOne(c => c.Customer)
-                .WithMany(ca => ca.CustomerAccounts)
-                .HasForeignKey(c => c.Id)
-                .IsRequired();
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

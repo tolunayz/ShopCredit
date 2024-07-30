@@ -8,20 +8,24 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
     public class GetCustomerByIdQueryHandler
     {
-        private readonly IRepository<Customer> _repository;
-        private readonly IReadRepository<Customer> _readRepository;
 
-        public GetCustomerByIdQueryHandler(IRepository<Customer> repository, IReadRepository<Customer> readRepository)
+        private readonly ICustomerAndAccountRepository _customerAndAccountRepository;
+
+        public GetCustomerByIdQueryHandler
+            (
+
+            ICustomerAndAccountRepository customerAndAccountRepository
+            )
         {
-            _repository = repository;
-            _readRepository = readRepository;
+
+            _customerAndAccountRepository = customerAndAccountRepository;
         }
 
         public async Task<GetCustomerByIdQueryResult> Handle(GetCustomerByIdQuery query)
         {
             try
             {
-                var values = await _readRepository.GetByIdAsync(query.Id);
+                var values = await _customerAndAccountRepository.GetCustomerByIdWithAccountsAsync(query.Id);
 
                 if (values == null)
                 {
@@ -30,10 +34,19 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
                 return new GetCustomerByIdQueryResult
                 {
+                    CustomerID= values.Id,
                     Name = values.Name,
                     Surname = values.Surname,
                     PhoneNumber = values.PhoneNumber,
+                    Email=values.Email,
                     Address = values.Address,
+
+                    CustomerAccounts = values.CustomerAccounts.Select(ca => new CustomerAccountResultById()
+                    {
+                        AccountId = ca.Id,
+                        CreatedDate = ca.CreatedDate,
+
+                    }).ToList() // CustomerAccount Id'leri ekleniyor
                 };
             }
             catch (KeyNotFoundException ex)
