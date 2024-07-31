@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, GetCustomerQueryResult>
+    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery,List<GetCustomerQueryResult>>
     {
         private readonly IReadRepository<Customer> _readRepository;
         private readonly IMapper _mapper;
@@ -22,33 +22,20 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             _mapper = mapper;
         }
 
-        public async Task<GetCustomerQueryResult> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetCustomerQueryResult>> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
             var customer = await _readRepository.GetAll()
               .Include(c => c.CustomerAccounts)
-              .FirstOrDefaultAsync();
+              .ToListAsync(cancellationToken);
 
             if (customer == null)
             {
                 return null;
             }
 
-            var result = _mapper.Map<GetCustomerQueryResult>(customer);
+            var result = _mapper.Map<List<GetCustomerQueryResult>>(customer);
             return result;
 
-            //return new GetCustomerQueryResult
-            //{
-            //    Id = customer.Id,
-            //    Name = customer.Name,
-            //    Surname = customer.Surname,
-            //    PhoneNumber = customer.PhoneNumber,
-            //    Email = customer.Email,
-            //    Address = customer.Address,
-            //    CustomerAccounts = customer.CustomerAccounts.Select(ca => new CustomerAccountResult
-            //    {
-            //        AccountId = ca.Id
-            //    }).ToList()
-            //};
         }
     }
 }

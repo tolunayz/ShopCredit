@@ -4,7 +4,7 @@ using System;
 
 namespace ShopCredit.Application.CQRS.Queries.CustomerQueries
 {
-    public class GetCustomerQuery : IRequest<GetCustomerQueryResult>
+    public class GetCustomerQuery : IRequest<List<GetCustomerQueryResult>>
     {
         //public Guid Id { get; set; }
 
