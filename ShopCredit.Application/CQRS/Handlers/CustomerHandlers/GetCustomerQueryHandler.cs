@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 using ShopCredit.Application.CQRS.Results.CustomerResults;
@@ -13,10 +14,12 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
     public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, GetCustomerQueryResult>
     {
         private readonly IReadRepository<Customer> _readRepository;
+        private readonly IMapper _mapper;
 
-        public GetCustomerQueryHandler(IReadRepository<Customer> readRepository)
+        public GetCustomerQueryHandler(IReadRepository<Customer> readRepository, IMapper mapper)
         {
             _readRepository = readRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetCustomerQueryResult> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
@@ -27,22 +30,25 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
             if (customer == null)
             {
-                return null; // veya uygun bir hata durumu döndürebilirsiniz
+                return null;
             }
 
-            return new GetCustomerQueryResult
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                Surname = customer.Surname,
-                PhoneNumber = customer.PhoneNumber,
-                Email = customer.Email,
-                Address = customer.Address,
-                CustomerAccounts = customer.CustomerAccounts.Select(ca => new CustomerAccountResult
-                {
-                    AccountId = ca.Id
-                }).ToList()
-            };
+            var result = _mapper.Map<GetCustomerQueryResult>(customer);
+            return result;
+
+            //return new GetCustomerQueryResult
+            //{
+            //    Id = customer.Id,
+            //    Name = customer.Name,
+            //    Surname = customer.Surname,
+            //    PhoneNumber = customer.PhoneNumber,
+            //    Email = customer.Email,
+            //    Address = customer.Address,
+            //    CustomerAccounts = customer.CustomerAccounts.Select(ca => new CustomerAccountResult
+            //    {
+            //        AccountId = ca.Id
+            //    }).ToList()
+            //};
         }
     }
 }
