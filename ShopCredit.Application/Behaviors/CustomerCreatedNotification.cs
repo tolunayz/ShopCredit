@@ -5,9 +5,12 @@ namespace ShopCredit.Application.Behaviors
 {
     public class CustomerCreatedNotification :INotification
     {
-        /// <summary>
-        /// 
-        /// </summary>
+       
         public Customer Customer { get; set; }
+
+        public CustomerCreatedNotification(Customer customer)
+        {
+            Customer = customer;
+        }
     }
 }

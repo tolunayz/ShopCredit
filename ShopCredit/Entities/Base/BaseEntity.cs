@@ -28,11 +28,16 @@ namespace ShopCredit.Domain.Entities.Base
         {
             _domainEvents.Enqueue(@domainEvent);
         }
-
-        protected void UpdateIntegrationEvent(IntegrationEvent integrationEvent)
+        protected void UpdateDomainEvent(DomainEvent domainEvent)
         {
-            _integrationEvents.Enqueue(integrationEvent);
+            _domainEvents.Enqueue(@domainEvent);
         }
+
+      
+        //protected void UpdateDomainEvent(DomainEvent integrationEvent)
+        //{
+        //    _integrationEvents.Enqueue(integrationEvent);
+        //}
         public BaseEntity()
         {
             

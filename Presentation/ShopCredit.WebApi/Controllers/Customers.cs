@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
-using ShopCredit.Application.CQRS.Handlers.CustomerHandlers;
 using ShopCredit.Application.CQRS.Queries;
 using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 

@@ -3,8 +3,6 @@ using ShopCredit.Application.Behaviors;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using ShopCredit.Domain.Events;
-using System.Runtime.InteropServices;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
@@ -36,7 +34,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
                     request.PhoneNumber,
                     request.Email,
                     request.Address
-                );
+             );
 
             customer.Update(request.Name, request.Surname, request.PhoneNumber)
                     .SetAddress(request.Address)
@@ -44,9 +42,11 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 
             await _writeRepository.Update(customer);
             await _writeRepository.SaveAsync();
-            await _publisher.Publish(new CustomerUpdatedNotification(customer)); 
+            await _publisher.Publish(new CustomerUpdatedNotification(customer));
+            
 
-          
+
+
 
         }
     }

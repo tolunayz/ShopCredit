@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using ShopCredit.Application.Behaviors;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
+using ShopCredit.Application.CQRS.Handlers.NotificationHandlers;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 
@@ -8,6 +10,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
     private readonly IWriteRepository<Customer> _writeRepository;
     private readonly IMediator _mediator;
     private readonly IShopCreditContext _con;
+   
 
     public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con)
     {
@@ -28,9 +31,9 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
         //await _con.CreateAsync(customer);
         await _con.Customers.AddAsync(customer);
-
         await _con.SaveChangesAsync(cancellationToken);
         customer.SendEmail(customer.Name, customer.Email);
+        await _mediator.Publish(new CustomerCreatedNotification(customer), cancellationToken);
         return true;
     }
 }

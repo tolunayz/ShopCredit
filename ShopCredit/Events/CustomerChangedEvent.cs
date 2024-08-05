@@ -2,14 +2,10 @@
 
 namespace ShopCredit.Domain.Events
 {
-    public class CustomerChangedEvent:IntegrationEvent
+    public class CustomerChangedEvent:DomainEvent
     {
-        public Guid CustomerId { get; }
-        
-        public CustomerChangedEvent(Guid orderId)
-        {
-            CustomerId = orderId;
-            //Type = IntegrationEventConstants.OrderConstant.OrderPlaced;
-        }
+        public Guid CustomerId { get; set; }
+
+    
     }
 }

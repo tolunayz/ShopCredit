@@ -1,7 +1,5 @@
-using MassTransit;
 using MediatR;
 using ShopCredit.Application.Behaviors;
-using ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Application.Services;
 using ShopCredit.Infrastructure.Context;
@@ -18,8 +16,8 @@ builder.Services.AddTransient(typeof(IWriteRepository<>), typeof(WriteRepository
 
 //Customer Builder
 builder.Services.AddControllers();
-builder.Services.AddTransient<ICustomerAndAccountRepository, CustomerAndAccount>();
 
+builder.Services.AddTransient<ICustomerAndAccountRepository, CustomerAndAccount>();
 builder.Services.AddApplicationServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

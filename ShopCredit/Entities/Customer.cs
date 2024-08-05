@@ -69,6 +69,7 @@ namespace ShopCredit.Domain.Entities
             c.PhoneNumber = phoneNumber;
             c.Email = email;
 
+
             return c;
 
         }
@@ -80,13 +81,13 @@ namespace ShopCredit.Domain.Entities
         /// <param name="surname"></param>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public Customer Update(string name, string surname,int phoneNumber)
+        public Customer Update(string name, string surname, int phoneNumber)
         {
             Name = name;
             Surname = surname;
             PhoneNumber = phoneNumber;
 
-            AddDomainEvent(new CustomerCreatedEvent()
+            UpdateDomainEvent(new CustomerChangedEvent()
             {
 
                 CustomerId = Guid.NewGuid(),
@@ -109,7 +110,7 @@ namespace ShopCredit.Domain.Entities
 
         public Customer SetEmail(string email)
         {
-         
+
             AddDomainEvent(new CustomerCreatedEvent()
             {
 
@@ -120,15 +121,15 @@ namespace ShopCredit.Domain.Entities
         }
         public Customer SendEmail(string name, string email)
         {
-          
+
 
             AddDomainEvent(new CustomerCreatedEvent()
             {
 
                 CustomerId = Guid.NewGuid(),
             });
-           
-            
+
+
             return this;
         }
 

@@ -17,6 +17,13 @@ namespace ShopCredit.Application.CQRS.Handlers.NotificationHandlers
         {
             _logger.LogInformation($"{notification.Customer.Name} {notification.Customer.Surname} Kullanıcısının bilgileri güncellendi");
 
+            //  await _publishEndpoint.Publish<CustomerUpdatedNotification>(new EventModelismi()
+            //{
+
+            //   mappings
+            //}
+            //  );
+
             return Task.CompletedTask;
         }
     }
