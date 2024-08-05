@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using ShopCredit.Application.CQRS.Commands.AdminCommands;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
-using ShopCredit.Application.CQRS.Queries.AminQueries;
+using ShopCredit.Application.CQRS.Queries.AdminQueries;
 using ShopCredit.Application.CQRS.Results.AdminResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Entities;

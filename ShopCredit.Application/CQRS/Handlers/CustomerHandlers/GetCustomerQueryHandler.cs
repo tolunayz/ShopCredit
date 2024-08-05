@@ -5,9 +5,6 @@ using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
@@ -25,7 +22,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
         public async Task<List<GetCustomerQueryResult>> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
             var customer = await _readRepository.GetAll()
-              .Include(c => c.CustomerAccounts)
+              .Include(c => c.CustomerAccounts)     
               .ToListAsync(cancellationToken);
 
             if (customer == null)

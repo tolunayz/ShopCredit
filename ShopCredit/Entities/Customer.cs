@@ -1,7 +1,7 @@
 ﻿using ShopCredit.Domain.Entities.Base;
+using ShopCredit.Domain.Events;
 using ShopCredit.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 
 namespace ShopCredit.Domain.Entities
 {
@@ -14,7 +14,7 @@ namespace ShopCredit.Domain.Entities
 
         public int PhoneNumber { get; private set; }
 
-        public string? Email { get; private set; }
+        public string Email { get; private set; }
 
         public string Address { get; private set; }
 
@@ -33,14 +33,14 @@ namespace ShopCredit.Domain.Entities
         /// <param name="phoneNumber"></param>
         /// <param name="email"></param>
         /// <param name="address"></param>
-        public void  CustomerProperties      
+        public void CustomerProperties
         (
             string name,
             string surname,
             int phoneNumber,
             string? email,
             string address
-           
+
             )
         {
             Name = name;
@@ -48,7 +48,7 @@ namespace ShopCredit.Domain.Entities
             PhoneNumber = phoneNumber;
             Email = email;
             Address = address;
-           
+
         }
 
         /// <summary>
@@ -62,14 +62,38 @@ namespace ShopCredit.Domain.Entities
         public static Customer Create(string name, string surname, int phoneNumber, string? email)
         {
             Customer c = new Customer();
-            
-                c.BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
-                c.Name = name;
-                c.Surname = surname;
-                c.PhoneNumber = phoneNumber;
-                c.Email = email;
-    
+
+            c.BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
+            c.Name = name;
+            c.Surname = surname;
+            c.PhoneNumber = phoneNumber;
+            c.Email = email;
+
             return c;
+
+        }
+
+        /// <summary>
+        /// <see cref="Name"/>, <see cref="Surname"/>, <see cref="PhoneNumber"/> propertylerini update eder
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="surname"></param>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        public Customer Update(string name, string surname,int phoneNumber)
+        {
+            Name = name;
+            Surname = surname;
+            PhoneNumber = phoneNumber;
+
+            AddDomainEvent(new CustomerCreatedEvent()
+            {
+
+                CustomerId = Guid.NewGuid(),
+            });
+
+
+            return this;
 
         }
 
@@ -77,11 +101,36 @@ namespace ShopCredit.Domain.Entities
         /// Adres set etmek içindir
         /// </summary>
         /// <param name="address"></param>
-        public Customer SetAddress(string? address)
+        public Customer SetAddress(string address)
         {
             Address = address;
             return this;
         }
-     
+
+        public Customer SetEmail(string email)
+        {
+         
+            AddDomainEvent(new CustomerCreatedEvent()
+            {
+
+                CustomerId = Guid.NewGuid(),
+            });
+
+            return this;
+        }
+        public Customer SendEmail(string name, string email)
+        {
+          
+
+            AddDomainEvent(new CustomerCreatedEvent()
+            {
+
+                CustomerId = Guid.NewGuid(),
+            });
+           
+            
+            return this;
+        }
+
     }
 }

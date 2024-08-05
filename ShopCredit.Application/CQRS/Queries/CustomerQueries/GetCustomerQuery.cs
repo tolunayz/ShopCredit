@@ -15,7 +15,7 @@ namespace ShopCredit.Application.CQRS.Queries.CustomerQueries
 
         public GetCustomerQuery()
         {
-            
+
         }
     }
 }

@@ -1,20 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using ShopCredit.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Infrastructure.Repositories
 {
     public class CustomerAndAccount : ICustomerAndAccountRepository
     {
-        private readonly ShopCreditContext _context;
+        private readonly IShopCreditContext _context;
 
-        public CustomerAndAccount(ShopCreditContext context)
+        public CustomerAndAccount(IShopCreditContext context)
         {
             _context = context;
         }

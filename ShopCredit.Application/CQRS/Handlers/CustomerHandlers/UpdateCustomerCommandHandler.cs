@@ -1,13 +1,10 @@
 ﻿using MediatR;
+using ShopCredit.Application.Behaviors;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using ShopCredit.Domain.Events;
+using System.Runtime.InteropServices;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
@@ -16,36 +13,42 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
         private readonly IRepository<Customer> _repository;
         private readonly IWriteRepository<Customer> _writeRepository;
         private readonly IReadRepository<Customer> _readRepository;
+        private readonly IPublisher _publisher;
 
         public UpdateCustomerCommandHandler
             (IRepository<Customer> repository,
             IReadRepository<Customer> readRepository,
-            IWriteRepository<Customer> writeRepository
-            )
+            IWriteRepository<Customer> writeRepository,
+            IPublisher publisher)
         {
             _repository = repository;
             _readRepository = readRepository;
             _writeRepository = writeRepository;
+            _publisher = publisher;
         }
         public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-
-            //var values = await _readRepository.GetByIdAsync(command.AdminId);
-            //values.AdminProperties(command.AdminName, command.AdminPassword);
-
-            var values = await _readRepository.GetByIdAsync(request.CustomerID);
-            values.CustomerProperties
+            var customer = await _readRepository.GetByIdAsync(request.CustomerID);
+            customer.CustomerProperties
             (
                     request.Name,
                     request.Surname,
                     request.PhoneNumber,
                     request.Email,
                     request.Address
-
                 );
 
-            await _writeRepository.Update(values);
+            customer.Update(request.Name, request.Surname, request.PhoneNumber)
+                    .SetAddress(request.Address)
+                    .SetEmail(request.Email);
+
+            await _writeRepository.Update(customer);
             await _writeRepository.SaveAsync();
+            await _publisher.Publish(new CustomerUpdatedNotification(customer)); 
+
+          
+
         }
     }
 }
+

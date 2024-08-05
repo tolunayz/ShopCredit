@@ -1,41 +1,36 @@
-﻿using FluentValidation.Results;
-using MediatR;
+﻿using MediatR;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
-using ShopCredit.Domain.Entities; 
+using ShopCredit.Domain.Entities;
 
-namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
+public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, bool>
 {
-    public class CreateCustomerCommandHandler :IRequestHandler<CreateCustomerCommand,bool>
+    private readonly IWriteRepository<Customer> _writeRepository;
+    private readonly IMediator _mediator;
+    private readonly IShopCreditContext _con;
+
+    public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con)
     {
-        private readonly IWriteRepository<Customer> _writeRepository;
+        _writeRepository = writeRepository;
+        _mediator = mediator;
+        _con = con;
+    }
 
-        public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository)
-        {
-            _writeRepository = writeRepository;
-        }
+    public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+    {
+        var customer = Customer.Create(
+            name: request.Name,
+            surname: request.Surname,
+            phoneNumber: request.PhoneNumber,
+            email: request.Email
+        ).SetAddress(request.Address);
 
-        public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
-        {
-            //CreateCustomerCommandValidator validator = new CreateCustomerCommandValidator();
 
+        //await _con.CreateAsync(customer);
+        await _con.Customers.AddAsync(customer);
 
-            //_validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-            //if (!_validationResult.IsValid)
-            //{
-            //    return false;
-            //}
-
-            await _writeRepository.CreateAsync(Customer.Create(
-                name: request.Name,
-                surname: request.Surname,
-                phoneNumber: request.PhoneNumber,
-                email: request.Email
-            ).SetAddress(address: request.Address));
-            await _writeRepository.SaveAsync();
-
-            return true;
-        }
+        await _con.SaveChangesAsync(cancellationToken);
+        customer.SendEmail(customer.Name, customer.Email);
+        return true;
     }
 }

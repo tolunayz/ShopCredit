@@ -28,10 +28,10 @@ namespace ShopCredit.Infrastructure.FluentApi
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.HasOne(c => c.Customer)
-                .WithMany(ca => ca.CustomerAccounts)
-                .HasForeignKey(c => c.CustomerId)
-                .IsRequired();
+            //builder.HasOne(c => c.Customer)
+            //    .WithMany(ca => ca.CustomerAccounts)
+            //    .HasForeignKey(c => c.CustomerId)
+            //    .IsRequired();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
     {
         public Guid AccountId { get; set; }
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
 
         public CustomerResults? Customer { get; set; }
 

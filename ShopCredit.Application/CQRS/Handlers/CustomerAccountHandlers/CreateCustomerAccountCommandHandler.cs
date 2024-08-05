@@ -29,9 +29,9 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
             var customerAccount = new CustomerAccount();
             customerAccount.CustomerAccountProperties
             (
-            request.CustomerId,
+                    request.CustomerId,
                     request.IsPaid,
-            request.Description,
+                    request.Description,
                     request.Debt,
                     request.CurrentDebt,
                     request.PaidDebt

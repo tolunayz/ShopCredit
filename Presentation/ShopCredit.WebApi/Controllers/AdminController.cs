@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ShopCredit.Application.CQRS.Commands.AdminCommands;
-using ShopCredit.Application.CQRS.Queries.AminQueries;
+using ShopCredit.Application.CQRS.Queries.AdminQueries;
 
 namespace ShopCredit.WebApi.Controllers
 {

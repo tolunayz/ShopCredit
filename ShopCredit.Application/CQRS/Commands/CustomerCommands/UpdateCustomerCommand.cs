@@ -9,7 +9,7 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 {
     public class UpdateCustomerCommand : IRequest
     {
-        public UpdateCustomerCommand(Guid customerID, string? name, string? surname, int phoneNumber, string? email, string? address)
+        public UpdateCustomerCommand(Guid customerID, string? name, string? surname, int phoneNumber, string email, string? address)
         {
             CustomerID = customerID;
             Name = name;
@@ -27,7 +27,7 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 
         public  int PhoneNumber { get; set; }
 
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         public string? Address { get; set; }
     }
