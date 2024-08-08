@@ -10,5 +10,9 @@ namespace ShopCredit.Application.CQRS.Queries.AdminQueries
 {
     public class GetAdminQuery: IRequest<List<GetAdminQueryResult>>
     {
+        public GetAdminQuery()
+        {
+                
+        }
     }
 }

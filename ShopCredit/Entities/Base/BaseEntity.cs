@@ -42,11 +42,5 @@ namespace ShopCredit.Domain.Entities.Base
         {
             
         }
-        public abstract class Entity : BaseEntity
-        {
-
-        }
-
-        
     }
 }

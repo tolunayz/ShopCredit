@@ -1,22 +1,26 @@
 ﻿using MediatR;
+using RabbitMQ.Client;
 using ShopCredit.Application.Behaviors;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
-using ShopCredit.Application.CQRS.Handlers.NotificationHandlers;
 using ShopCredit.Application.Interfaces;
+using ShopCredit.Application.Services;
 using ShopCredit.Domain.Entities;
+using System.Text;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, bool>
 {
     private readonly IWriteRepository<Customer> _writeRepository;
     private readonly IMediator _mediator;
     private readonly IShopCreditContext _con;
-   
+    private readonly NotificationSender _notificationSender;
 
-    public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con)
+
+    public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con, NotificationSender notificationSender)
     {
         _writeRepository = writeRepository;
         _mediator = mediator;
         _con = con;
+        _notificationSender = notificationSender;
     }
 
     public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
@@ -28,12 +32,15 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             email: request.Email
         ).SetAddress(request.Address);
 
-
-        //await _con.CreateAsync(customer);
         await _con.Customers.AddAsync(customer);
         await _con.SaveChangesAsync(cancellationToken);
-        customer.SendEmail(customer.Name, customer.Email);
         await _mediator.Publish(new CustomerCreatedNotification(customer), cancellationToken);
+
+        //_notificationSender.SendNotification("sdsds");
+        ////await Task.Delay(5000);
+        ////_notificationSender.ReadNotification("reading");
+      
+        
         return true;
     }
 }

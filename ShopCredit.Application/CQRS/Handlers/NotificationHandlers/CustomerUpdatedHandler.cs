@@ -1,30 +1,49 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using ShopCredit.Application.Behaviors;
+using ShopCredit.Domain.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.NotificationHandlers
 {
     public class CustomerUpdatedHandler : INotificationHandler<CustomerUpdatedNotification>
     {
-        private readonly ILogger<CustomerCreatedEmailHandler> _logger;
+        private readonly ILogger<CustomerUpdatedHandler> _logger;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public CustomerUpdatedHandler(ILogger<CustomerCreatedEmailHandler> logger)
+        public CustomerUpdatedHandler(ILogger<CustomerUpdatedHandler> logger, IPublishEndpoint publishEndpoint)
         {
             _logger = logger;
+            _publishEndpoint = publishEndpoint;
         }
 
-        public Task Handle(CustomerUpdatedNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(CustomerUpdatedNotification notification, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{notification.Customer.Name} {notification.Customer.Surname} Kullanıcısının bilgileri güncellendi");
 
-            //  await _publishEndpoint.Publish<CustomerUpdatedNotification>(new EventModelismi()
+            var message = $"{notification.Customer.Name} {notification.Customer.Surname} Kullanıcısının bilgileri güncellendi";
+            //_logger.LogInformation(message);
+            _logger.LogInformation($"Gönderilen Mesaj:{message}");
+
+            //var customerUpdatedEvent = new CustomerUpdateEvent
             //{
+            //    Name = notification.Customer.Name,
+            //    Surname = notification.Customer.Surname,
+            //    Email = notification.Customer.Email
+            //};
 
-            //   mappings
-            //}
-            //  );
+            //await _publishEndpoint.Publish(customerUpdatedEvent, cancellationToken);
 
-            return Task.CompletedTask;
+            await _publishEndpoint.Publish(new CustomerNotificationMessage
+            {
+                Text = $"Giden published"+message
+            }, cancellationToken);
+
+        }
+
+        public class CustomerNotificationMessage()
+        {
+            public string Text { get; set; }
+
         }
     }
 }

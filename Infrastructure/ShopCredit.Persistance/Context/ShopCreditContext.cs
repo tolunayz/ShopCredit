@@ -1,12 +1,11 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
+using ShopCredit.Domain.Entities.Base;
 using ShopCredit.Entities;
 using ShopCredit.Infrastructure.FluentApi;
 using System.Reflection;
-using static ShopCredit.Domain.Entities.Base.BaseEntity;
 
 namespace ShopCredit.Infrastructure.Context
 {
@@ -45,7 +44,7 @@ namespace ShopCredit.Infrastructure.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var domainEventEntities = ChangeTracker.Entries<Entity>()
+            var domainEventEntities = ChangeTracker.Entries<BaseEntity>()
                 .Select(po => po.Entity)
                 .Where(po => po.DomainEvents.Any())
                 .ToArray();
@@ -67,7 +66,7 @@ namespace ShopCredit.Infrastructure.Context
             return result;
         }
 
-        private async Task PublishDomainEventsAsync(Entity[] domainEventEntities, CancellationToken cancellationToken)
+        private async Task PublishDomainEventsAsync(BaseEntity[] domainEventEntities, CancellationToken cancellationToken)
         {
             foreach (var entity in domainEventEntities)
             {

@@ -20,17 +20,17 @@ namespace ShopCredit.WebApi.Controllers
         public async Task<IActionResult> GetCustomer(Guid id)
         {
 
-            var values = await _mediator.Send(new GetCustomerByIdQuery(id));
+            var customerById = await _mediator.Send(new GetCustomerByIdQuery(id));
             //var values = await _getCustomerByIdQueryHandler.Handle(new GetCustomerByIdQuery(id));
-            return Ok(values);
+            return Ok(customerById);
         }
 
         [HttpGet]
 
         public async Task<IActionResult> CustomerList()
         {
-            var values = await _mediator.Send(new GetCustomerQuery());
-            return Ok(values);
+            var customerList = await _mediator.Send(new GetCustomerQuery());
+            return Ok(customerList);
         }
 
         [HttpPost]
