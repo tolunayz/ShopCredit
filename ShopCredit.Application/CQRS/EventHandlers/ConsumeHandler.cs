@@ -5,10 +5,11 @@ namespace ShopCredit.Application.CQRS.EventHandlers
 {
     public class ConsumeHandler : IConsumer<CustomerNotificationMessage>
     {
-        public  Task Consume(ConsumeContext<CustomerNotificationMessage> context)
+        public Task Consume(ConsumeContext<CustomerNotificationMessage> context)
         {
             var message = context.Message.Text;
-             Console.WriteLine(message);
+            Console.WriteLine(message);
+
             return Task.CompletedTask;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopCredit.Application.CQRS.Results.AdminResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
@@ -20,13 +21,7 @@ namespace ShopCredit.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CacheGet(string key)
-        {
-            return Ok(await _redisChanceService.GetValueAsync(key));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CacheSet([FromBody] Admin admin)
+        public async Task<IActionResult> CacheSet([FromBody] GetAdminQueryResult admin)
         {
             if (admin == null)
             {
@@ -36,13 +31,14 @@ namespace ShopCredit.WebApi.Controllers
             var customerJson = JsonSerializer.Serialize(admin);
             await _redisChanceService.SetValueAsync(admin.Id.ToString(), customerJson);
             return Ok();
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> CacheDelete(string key)
-        {
-            await _redisChanceService.Clear(key);
-            return Ok();
+
+            //// Create an Admin entity from the request model
+            //var admin = new Admin(adminRequest.AdminName, adminRequest.AdminPassword);
+
+            //var adminJson = JsonSerializer.Serialize(admin);
+            //await _redisChanceService.SetValueAsync(admin.Id.ToString(), adminJson);
+            //return Ok();
         }
 
     }

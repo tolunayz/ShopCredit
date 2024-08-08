@@ -12,15 +12,15 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
     private readonly IWriteRepository<Customer> _writeRepository;
     private readonly IMediator _mediator;
     private readonly IShopCreditContext _con;
-    private readonly NotificationSender _notificationSender;
+    //private readonly NotificationSender _notificationSender;
 
 
-    public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con, NotificationSender notificationSender)
+    public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con/*, NotificationSender notificationSender*/)
     {
         _writeRepository = writeRepository;
         _mediator = mediator;
         _con = con;
-        _notificationSender = notificationSender;
+        //_notificationSender = notificationSender;
     }
 
     public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)

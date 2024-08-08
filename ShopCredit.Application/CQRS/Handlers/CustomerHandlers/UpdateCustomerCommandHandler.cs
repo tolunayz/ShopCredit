@@ -43,10 +43,6 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
             await _writeRepository.Update(customer);
             await _writeRepository.SaveAsync();
             await _publisher.Publish(new CustomerUpdatedNotification(customer), cancellationToken);
-            
-
-
-
 
         }
     }

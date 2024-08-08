@@ -1,7 +1,5 @@
-using MassTransit;
 using MediatR;
 using ShopCredit.Application.Behaviors;
-using ShopCredit.Application.CQRS.Handlers.NotificationHandlers;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Application.Services;
 using ShopCredit.Infrastructure.Context;
@@ -17,32 +15,25 @@ builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient(typeof(IReadRepository<>), typeof(ReadRepository<>));
 builder.Services.AddTransient(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
+//builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+//{
+//    var configuration = ConfigurationOptions.Parse("your-redis-connection-string", true);
+//    return ConnectionMultiplexer.Connect(configuration);
+//});
 
-
-builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-{
-    var configuration = ConfigurationOptions.Parse("your-redis-connection-string", true);
-    return ConnectionMultiplexer.Connect(configuration);
-});
-
-// Register IDatabase as a transient dependency
 builder.Services.AddTransient<IDatabase>(sp =>
 {
     var connectionMultiplexer = sp.GetRequiredService<IConnectionMultiplexer>();
     return connectionMultiplexer.GetDatabase();
 });
-
-// Register your RedisCacheService as a singleton
 builder.Services.AddSingleton<IRedisCacheService, RedisCacheService>();
-
-
-
 
 //Customer Builder
 builder.Services.AddControllers();
 //RabbitMQ
+
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
-builder.Services.AddSingleton<NotificationSender>();
+//builder.Services.AddSingleton<NotificationSender>();
 
 builder.Services.AddTransient<ICustomerAndAccountRepository, CustomerAndAccount>();
 builder.Services.AddApplicationServices(builder.Configuration);

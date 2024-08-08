@@ -4,13 +4,9 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using ShopCredit.Application.Behaviors;
 using ShopCredit.Application.CQRS.EventHandlers;
-using ShopCredit.Application.CQRS.Handlers.NotificationHandlers;
-using ShopCredit.Application.Interfaces;
 using StackExchange.Redis;
 using System.Reflection;
-using System.Runtime;
 
 namespace ShopCredit.Application.Services
 {
@@ -22,6 +18,8 @@ namespace ShopCredit.Application.Services
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(ServicesRegistiration).Assembly));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.Configure<RabbitMQSettings>(configuration.GetSection("RabbitMQSettings"));
+
+
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>
@@ -53,7 +51,7 @@ namespace ShopCredit.Application.Services
             var multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
-            services.AddScoped<NotificationSender>();
+            //services.AddScoped<NotificationSender>();
 
 
 

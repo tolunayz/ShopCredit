@@ -14,10 +14,12 @@ namespace ShopCredit.Entities
         /// </summary>
         /// <param name="adminName"></param>
         /// <param name="adminPassword"></param>
+     
         public Admin()
         {
-           
+            
         }
+
         /// <summary>
         /// Admin propertyleri
         /// </summary>
