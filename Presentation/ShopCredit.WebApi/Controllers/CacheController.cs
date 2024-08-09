@@ -21,24 +21,16 @@ namespace ShopCredit.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CacheSet([FromBody] GetAdminQueryResult admin)
+        public async Task<IActionResult> RedisCacheSet([FromBody] GetAdminQueryResult admin)
         {
             if (admin == null)
             {
                 return BadRequest("Admin verisi eksik.");
             }
-
+            
             var customerJson = JsonSerializer.Serialize(admin);
             await _redisChanceService.SetValueAsync(admin.Id.ToString(), customerJson);
             return Ok();
-
-
-            //// Create an Admin entity from the request model
-            //var admin = new Admin(adminRequest.AdminName, adminRequest.AdminPassword);
-
-            //var adminJson = JsonSerializer.Serialize(admin);
-            //await _redisChanceService.SetValueAsync(admin.Id.ToString(), adminJson);
-            //return Ok();
         }
 
     }
