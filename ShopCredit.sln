@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCredit.Domain", "ShopCredit\ShopCredit.Domain.csproj", "{5807547E-227C-462C-BFA0-5D9E1C6B9C0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.Domain", "ShopCredit\ShopCredit.Domain.csproj", "{5807547E-227C-462C-BFA0-5D9E1C6B9C0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCredit.Infrastructure", "Infrastructure\ShopCredit.Persistance\ShopCredit.Infrastructure.csproj", "{5C86B9CD-077B-45DC-8145-1949765A8E7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.Infrastructure", "Infrastructure\ShopCredit.Persistance\ShopCredit.Infrastructure.csproj", "{5C86B9CD-077B-45DC-8145-1949765A8E7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCredit.WebApi", "Presentation\ShopCredit.WebApi\ShopCredit.WebApi.csproj", "{88A72B98-EB34-47AE-B8D0-C559659481FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.WebApi", "Presentation\ShopCredit.WebApi\ShopCredit.WebApi.csproj", "{88A72B98-EB34-47AE-B8D0-C559659481FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCredit.Application", "ShopCredit.Application\ShopCredit.Application.csproj", "{903460A1-F297-4244-A485-F49495C72AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.Application", "ShopCredit.Application\ShopCredit.Application.csproj", "{903460A1-F297-4244-A485-F49495C72AAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCredit.UnitTest", "ShopCredit.UnitTest\ShopCredit.UnitTest.csproj", "{D3429319-8A48-4BF2-B698-3DC6D6F21451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{903460A1-F297-4244-A485-F49495C72AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{903460A1-F297-4244-A485-F49495C72AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{903460A1-F297-4244-A485-F49495C72AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3429319-8A48-4BF2-B698-3DC6D6F21451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3429319-8A48-4BF2-B698-3DC6D6F21451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3429319-8A48-4BF2-B698-3DC6D6F21451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3429319-8A48-4BF2-B698-3DC6D6F21451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

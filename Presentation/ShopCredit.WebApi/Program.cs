@@ -15,12 +15,6 @@ builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient(typeof(IReadRepository<>), typeof(ReadRepository<>));
 builder.Services.AddTransient(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
-//builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-//{
-//    var configuration = ConfigurationOptions.Parse("your-redis-connection-string", true);
-//    return ConnectionMultiplexer.Connect(configuration);
-//});
-
 builder.Services.AddTransient<IDatabase>(sp =>
 {
     var connectionMultiplexer = sp.GetRequiredService<IConnectionMultiplexer>();

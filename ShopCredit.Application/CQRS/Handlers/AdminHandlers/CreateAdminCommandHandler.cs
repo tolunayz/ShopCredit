@@ -19,7 +19,7 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
          public async Task<Guid> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
         {
             var admin = new Admin();
-            admin.AdminProperties(
+                admin.AdminProperties(
                 request.AdminName,
                 request.AdminPassword
             );

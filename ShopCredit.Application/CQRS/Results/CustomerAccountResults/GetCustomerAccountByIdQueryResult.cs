@@ -8,7 +8,7 @@
 
         public bool IsPaid { get; set; }
 
-        public required string Description { get; set; }
+        public  string? Description { get; set; }
         
         public CustomerResult? CustomerResult { get; set; }
     }

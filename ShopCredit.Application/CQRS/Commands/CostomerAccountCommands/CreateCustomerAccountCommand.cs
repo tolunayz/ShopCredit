@@ -4,9 +4,6 @@ namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
 {
     public class CreateCustomerAccountCommand : IRequest<Guid>
     {
-
-        //public DateTime DebtDate { get; set; }
-
         public Guid CustomerId { get; set; }
 
         public bool IsPaid { get; set; }
@@ -18,20 +15,6 @@ namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
         public int Debt { get; set; }   //**
 
         public int PaidDebt { get; set; }   //**
-
-        //public  string? Name { get; set; }
-
-        //public  string? Surname { get; set; }
-
-        //public  int PhoneNumber { get; set; }
-
-        //public string? Email { get; set; }
-
-        //public string? Address { get; set; }
-
-
-
-
-        
+  
     }
 }

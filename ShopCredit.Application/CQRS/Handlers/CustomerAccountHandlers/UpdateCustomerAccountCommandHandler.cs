@@ -1,20 +1,12 @@
 ﻿using MediatR;
-using ShopCredit.Application.CQRS.Commands.AdminCommands;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
-using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
-    public class UpdateCustomerAccountCommandHandler :IRequestHandler<UpdateCustomerAccountCommand> 
+    public class UpdateCustomerAccountCommandHandler : IRequestHandler<UpdateCustomerAccountCommand>
     {
         private readonly IWriteRepository<CustomerAccount> _writeRepository;
         private readonly IReadRepository<CustomerAccount> _readRepository;
@@ -32,10 +24,10 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
             var customer = await _customerReadRepository.GetByIdAsync(request.CustomerId);
             values.CustomerAccountProperties
             (
-            request.CustomerId,
-            request.IsPaid,
+               
+                request.IsPaid,
                 request.Description,
-            request.CurrentDebt,
+                request.CurrentDebt,
                 request.Debt,
                 request.PaidDebt
                 );

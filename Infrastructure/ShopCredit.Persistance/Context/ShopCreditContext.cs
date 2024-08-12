@@ -33,8 +33,6 @@ namespace ShopCredit.Infrastructure.Context
             .WithMany(c => c.CustomerAccounts)
             .HasForeignKey(ca => ca.CustomerId);
 
-
-          
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -54,7 +52,7 @@ namespace ShopCredit.Infrastructure.Context
                 return await base.SaveChangesAsync(cancellationToken);
             }
 
-            if (Database.CurrentTransaction is not null) // the transaction commit and rollback is managed outside
+            if (Database.CurrentTransaction is not null) 
             {
                 await PublishDomainEventsAsync(domainEventEntities, cancellationToken);
                 var saveChangesResult = await base.SaveChangesAsync(cancellationToken);
@@ -65,7 +63,6 @@ namespace ShopCredit.Infrastructure.Context
             var result = await base.SaveChangesAsync(cancellationToken);
             return result;
         }
-
         private async Task PublishDomainEventsAsync(BaseEntity[] domainEventEntities, CancellationToken cancellationToken)
         {
             foreach (var entity in domainEventEntities)
