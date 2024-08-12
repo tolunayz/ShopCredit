@@ -12,7 +12,7 @@ namespace ShopCredit.Domain.Entities
 
         public string Surname { get; private set; }
 
-        public int PhoneNumber { get; private set; }
+        public string PhoneNumber { get; private set; }
 
         public string Email { get; private set; }
 
@@ -37,7 +37,7 @@ namespace ShopCredit.Domain.Entities
         (
             string name,
             string surname,
-            int phoneNumber,
+            string phoneNumber,
             string? email,
             string address
 
@@ -59,7 +59,7 @@ namespace ShopCredit.Domain.Entities
         /// <param name="phoneNumber"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static Customer Create(string name, string surname, int phoneNumber, string? email)
+        public static Customer Create(string name, string surname, string phoneNumber, string? email)
         {
             Customer c = new Customer();
 
@@ -81,7 +81,7 @@ namespace ShopCredit.Domain.Entities
         /// <param name="surname"></param>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public Customer Update(string name, string surname, int phoneNumber)
+        public Customer Update(string name, string surname, string phoneNumber)
         {
             Name = name;
             Surname = surname;

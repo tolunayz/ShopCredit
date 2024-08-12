@@ -1,11 +1,8 @@
 ﻿using MediatR;
-using RabbitMQ.Client;
 using ShopCredit.Application.Behaviors;
 using ShopCredit.Application.CQRS.Commands.CustomerCommands;
 using ShopCredit.Application.Interfaces;
-using ShopCredit.Application.Services;
 using ShopCredit.Domain.Entities;
-using System.Text;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, bool>
 {

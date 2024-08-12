@@ -16,7 +16,7 @@ namespace ShopCredit.Application.CQRS.Results.CustomerResults
 
         public  string? Surname { get; set; }
 
-        public  int? PhoneNumber { get; set; }
+        public  string? PhoneNumber { get; set; }
 
         public string? Email { get; set; }
 

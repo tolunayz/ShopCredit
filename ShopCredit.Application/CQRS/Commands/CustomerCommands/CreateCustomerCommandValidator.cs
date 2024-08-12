@@ -4,30 +4,30 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 {
     public sealed class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
     {
-
         public CreateCustomerCommandValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("İsim alanı boş bıraklamaz.")
-                .MaximumLength(100).MinimumLength(3).WithMessage("En az 3 en fazla 100 karakter girilebilir.");
+                .NotEmpty().WithMessage("İsim alanı boş bırakılamaz.")
+                .MaximumLength(100).WithMessage("İsim en fazla 100 karakter olabilir.")
+                .MinimumLength(3).WithMessage("İsim en az 3 karakter olmalıdır.");
 
             RuleFor(x => x.Surname)
-                .NotEmpty().WithMessage("Soyisim alanı boş bırakılamaz.")
-                .MaximumLength(100)
-                .MinimumLength(3).WithMessage("En az 3 en fazla 100 karakter girilebilir.");
-
-
+                .NotEmpty().WithMessage("Soy isim alanı boş bırakılamaz.")
+                .MaximumLength(100).WithMessage("Soy isim en fazla 100 karakter olabilir.")
+                .MinimumLength(3).WithMessage("Soy isim en az 3 karakter olmalıdır.");
 
             RuleFor(x => x.PhoneNumber)
-                .GreaterThan(0).WithMessage("Telefon numarası 0 olamaz.");
+                .NotEmpty().WithMessage("Telefon numarası boş bırakılamaz.")
+                .Length(10).WithMessage("Telefon numarası 10 haneli olmalıdır.")
+                .Matches(@"^\d{10}$").WithMessage("Telefon numarası sadece rakamlardan oluşmalıdır.");
 
             RuleFor(x => x.Email)
-                .EmailAddress().WithMessage("Geçersiz Email.")
-                .When(x => !string.IsNullOrEmpty(x.Email));
+                .NotEmpty().WithMessage("Email alanı boş bırakılamaz.")
+                .EmailAddress().WithMessage("Geçersiz Email.");
 
             RuleFor(x => x.Address)
                 .NotEmpty().WithMessage("Adres alanı boş bırakılamaz.")
-                .MaximumLength(200).WithMessage("Karakter sınırı 200.");
+                .MaximumLength(200).WithMessage("Adres 200 karakterden uzun olamaz.");
         }
     }
 }

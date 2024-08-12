@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopCredit.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using ShopCredit.Infrastructure.Context;
 namespace ShopCredit.Infrastructure.Migrations
 {
     [DbContext(typeof(ShopCreditContext))]
-    partial class ShopCreditContextModelSnapshot : ModelSnapshot
+    [Migration("20240812081449_PhoneNumbertoString")]
+    partial class PhoneNumbertoString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
