@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.WebApi", "Presen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.Application", "ShopCredit.Application\ShopCredit.Application.csproj", "{903460A1-F297-4244-A485-F49495C72AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopCredit.UnitTest", "ShopCredit.UnitTest\ShopCredit.UnitTest.csproj", "{D3429319-8A48-4BF2-B698-3DC6D6F21451}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCredit.UnitTest", "ShopCredit.UnitTest\ShopCredit.UnitTest.csproj", "{D3429319-8A48-4BF2-B698-3DC6D6F21451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
