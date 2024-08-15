@@ -1,10 +1,8 @@
 ﻿using MediatR;
-using ShopCredit.Application.CQRS.Commands.AdminCommands;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {

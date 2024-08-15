@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ShopCredit.Application.CQRS.Results.CustomerResults
+﻿namespace ShopCredit.Application.CQRS.Results.CustomerResults
 {
     public class GetCustomerQueryResult
     {

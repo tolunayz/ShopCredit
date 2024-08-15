@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopCredit.Application.CQRS.Results.CustomerResults
+﻿namespace ShopCredit.Application.CQRS.Results.CustomerResults
 {
     public class GetCustomerByIdQueryResult
     {
