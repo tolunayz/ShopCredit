@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopCredit.Domain.Entities;
-using ShopCredit.Entities;
-using System.Reflection.Emit;
 
 namespace ShopCredit.Infrastructure.FluentApi
 {

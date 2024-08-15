@@ -1,6 +1,5 @@
 ﻿using ShopCredit.Domain.Entities;
 using ShopCredit.Domain.Entities.Base;
-using ShopCredit.Entities;
 
 namespace ShopCredit.Entities
 {

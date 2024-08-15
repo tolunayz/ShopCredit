@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopCredit.Infrastructure.Repositories
 {

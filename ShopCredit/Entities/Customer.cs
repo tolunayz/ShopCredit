@@ -1,7 +1,6 @@
 ﻿using ShopCredit.Domain.Entities.Base;
 using ShopCredit.Domain.Events;
 using ShopCredit.Entities;
-using System.Runtime.CompilerServices;
 
 namespace ShopCredit.Domain.Entities
 {

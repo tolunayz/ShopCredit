@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShopCredit.Application.CQRS.Results.AdminResults;
 using ShopCredit.Application.Interfaces;
-using ShopCredit.Domain.Entities;
-using ShopCredit.Entities;
-using ShopCredit.Infrastructure.Repositories;
 using System.Text.Json;
 
 namespace ShopCredit.WebApi.Controllers
