@@ -4,20 +4,16 @@ namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
 {
     public class UpdateCustomerAccountCommand : IRequest
     {
-        public UpdateCustomerAccountCommand(Guid accountId, bool isPaid, string description, int currentDebt, int debt, int paidDebt)
+        public UpdateCustomerAccountCommand(Guid accountId, string description, int debt, int paidDebt)
         {
-            AccountId = accountId;
-            IsPaid = isPaid;
-            Description = description;
-            CurrentDebt = currentDebt;
+            AccountId = accountId;        
+            Description = description;        
             Debt = debt;
             PaidDebt = paidDebt;
         }
 
         public Guid AccountId { get; set; }
-        public bool IsPaid { get; set; }
         public string Description { get; set; }
-        public int CurrentDebt { get; set; }
         public int Debt { get; set; }
         public int PaidDebt { get; set; }
     }

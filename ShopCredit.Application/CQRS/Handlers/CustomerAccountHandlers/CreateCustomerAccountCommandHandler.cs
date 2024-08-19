@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
+using ShopCredit.Application.CQRS.Commands.CustomerAccountCommands;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
@@ -24,19 +25,17 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 
         public async Task<Guid> Handle(CreateCustomerAccountCommand request, CancellationToken cancellationToken)
         {
-            var customerAccount = new CustomerAccount();
-            customerAccount.CustomerAccountProperties
-            (  
-                    request.IsPaid,
-                    request.Description,
-                    request.Debt,
-                    request.CurrentDebt,
-                    request.PaidDebt
+
+            var customerAccount = CustomerAccount.Create
+                (
+                customerId: request.CustomerId,
+                description: request.Description,
+                debt: request.Debt,
+                paidDebt: request.PaidDebt
                 );
             await _writeCustomerAccountRepository.CreateAsync(customerAccount);
             await _writeCustomerAccountRepository.SaveAsync();
             return customerAccount.Id;
-
         }
     }
 

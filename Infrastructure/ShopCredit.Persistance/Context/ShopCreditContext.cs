@@ -38,7 +38,7 @@ namespace ShopCredit.Infrastructure.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-JN2JCTK;initial Catalog=ShopDebtDB;integrated Security=true;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-JN2JCTK;initial Catalog=ShopCreditsDB;integrated Security=true;TrustServerCertificate=true");
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

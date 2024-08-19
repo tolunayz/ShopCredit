@@ -3,7 +3,7 @@ using ShopCredit.Domain.Entities.Base;
 
 namespace ShopCredit.Entities
 {
-    public class CustomerAccount: BaseEntity
+    public class CustomerAccount : BaseEntity
     {
         public Guid CustomerId { get; set; }
 
@@ -11,21 +11,21 @@ namespace ShopCredit.Entities
 
         public string? Description { get; private set; }
 
-        public int CurrentDebt { get; private set; } //**
+        public int CurrentDebt { get; private set; } 
 
-        public int Debt { get; private set; }   //**
+        public int Debt { get; private set; }  
 
-        public int PaidDebt { get; private set; }   //**
+        public int PaidDebt { get; private set; }   
 
-        public virtual Customer Customer { get;  set; }
+        public virtual Customer Customer { get; set; }
 
         /// <summary>
-        /// CustomerAccount Constructer'ı
+        /// CustomerAccounts Constructer
         /// </summary>
         public CustomerAccount() { }
 
         /// <summary>
-        /// Customer Acoount Propertyleri
+        /// Customer Account Properties
         /// </summary>
         /// <param name="isPaid"></param>
         /// <param name="description"></param>
@@ -33,21 +33,35 @@ namespace ShopCredit.Entities
         /// <param name="debt"></param>
         /// <param name="paidDebt"></param>
         /// 
-        
-
-        
-        public void CustomerAccountProperties(bool isPaid, string? description, int currentDebt, int debt, int paidDebt)
+        public void CustomerAccountProperties(string? description, int debt, int paidDebt)
         {
-            //BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
-            
-            IsPaid = isPaid;
             Description = description;
-            CurrentDebt = currentDebt;
             Debt = debt;
             PaidDebt = paidDebt;
         }
 
-        
+        /// <summary>
+        /// CustomerAccount Create Method
+        /// </summary>
+        /// <param name="isPaid"></param>
+        /// <param name="description"></param>
+        /// <param name="currentDebt"></param>
+        /// <param name="debt"></param>
+        /// <param name="paidDebt"></param>
+        public static CustomerAccount Create(string? description, int debt, int paidDebt,Guid customerId)
+        {
+            CustomerAccount ca = new CustomerAccount();
+            ca.BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
+            ca.Description = description;
+            ca.Debt = debt;
+            ca.PaidDebt = paidDebt;
+            ca.CurrentDebt = debt - paidDebt;
+            ca.IsPaid = (debt - paidDebt) == 0;
+            ca.CustomerId = customerId;
+
+            return ca;
+        }
+
     }
 }
 

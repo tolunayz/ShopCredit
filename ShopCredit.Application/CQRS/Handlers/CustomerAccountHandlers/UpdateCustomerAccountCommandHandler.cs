@@ -23,11 +23,8 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
             var values = await _readRepository.GetByIdAsync(request.AccountId);
             var customer = await _customerReadRepository.GetByIdAsync(request.AccountId);
             values.CustomerAccountProperties
-            (
-               
-                request.IsPaid,
+            (      
                 request.Description,
-                request.CurrentDebt,
                 request.Debt,
                 request.PaidDebt
                 );
