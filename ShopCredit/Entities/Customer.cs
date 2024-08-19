@@ -25,7 +25,7 @@ namespace ShopCredit.Domain.Entities
         }
 
         /// <summary>
-        /// Customer Propertyleri
+        /// Customer Properties
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>
@@ -37,7 +37,7 @@ namespace ShopCredit.Domain.Entities
             string name,
             string surname,
             string phoneNumber,
-            string? email,
+            string email,
             string address
 
             )
@@ -58,7 +58,7 @@ namespace ShopCredit.Domain.Entities
         /// <param name="phoneNumber"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static Customer Create(string name, string surname, string phoneNumber, string? email)
+        public static Customer Create(string name, string surname, string phoneNumber, string email)
         {
             Customer c = new Customer();
 
@@ -111,14 +111,5 @@ namespace ShopCredit.Domain.Entities
             Email = email;
             return this;
         }
-        //public Customer SendEmail(string name, string email)
-        //{
-        //    AddDomainEvent(new CustomerCreatedEvent()
-        //    {
-        //        CustomerId = Guid.NewGuid(),
-        //    });
-        //    return this;
-        //}
-
     }
 }

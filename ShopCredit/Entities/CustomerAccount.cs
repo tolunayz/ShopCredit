@@ -33,10 +33,12 @@ namespace ShopCredit.Entities
         /// <param name="debt"></param>
         /// <param name="paidDebt"></param>
         /// 
+        
 
+        
         public void CustomerAccountProperties(bool isPaid, string? description, int currentDebt, int debt, int paidDebt)
         {
-            BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
+            //BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
             
             IsPaid = isPaid;
             Description = description;

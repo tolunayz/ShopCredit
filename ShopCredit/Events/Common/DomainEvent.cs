@@ -4,6 +4,7 @@
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public bool IsPublished { get; set; }
+        
 
     }
 }

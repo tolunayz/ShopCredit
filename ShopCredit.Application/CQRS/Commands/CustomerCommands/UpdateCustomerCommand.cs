@@ -4,7 +4,7 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerCommands
 {
     public class UpdateCustomerCommand : IRequest
     {
-        public UpdateCustomerCommand(Guid customerID, string? name, string? surname, string phoneNumber, string email, string? address)
+        public UpdateCustomerCommand(Guid customerID, string name, string surname, string phoneNumber, string email, string? address)
         {
             CustomerID = customerID;
             Name = name;

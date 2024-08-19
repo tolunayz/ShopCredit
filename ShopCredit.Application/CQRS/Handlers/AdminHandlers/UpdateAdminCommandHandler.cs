@@ -19,7 +19,11 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
         public async Task Handle(UpdateAdminCommand request, CancellationToken cancellationToken)
         {
             var values = await _readRepository.GetByIdAsync(request.AdminId);
-            values.AdminProperties(request.AdminName, request.AdminPassword);
+            values.AdminProperties
+                (
+                request.AdminName, 
+                request.AdminPassword
+                );
             await _writeRepository.Update(values);
             await _writeRepository.SaveAsync();
         }
@@ -27,3 +31,21 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
 }
 
 
+//public async Task Handle(UpdateCustomerAccountCommand request, CancellationToken cancellationToken)
+//{
+//    var values = await _readRepository.GetByIdAsync(request.CustomerId);
+//    var customer = await _customerReadRepository.GetByIdAsync(request.CustomerId);
+//    values.CustomerAccountProperties
+//    (
+
+//        request.IsPaid,
+//        request.Description,
+//        request.CurrentDebt,
+//        request.Debt,
+//        request.PaidDebt
+//        );
+
+//    await _writeRepository.Update(values);
+//    await _writeRepository.SaveAsync();
+//}
+//    }

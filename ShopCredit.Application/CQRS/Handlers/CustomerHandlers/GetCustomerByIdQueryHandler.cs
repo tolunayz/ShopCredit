@@ -5,7 +5,7 @@ using ShopCredit.Application.Interfaces;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdQueryResult> 
+    public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdQueryResult>
     {
 
         private readonly ICustomerAndAccountRepository _customerAndAccountRepository;

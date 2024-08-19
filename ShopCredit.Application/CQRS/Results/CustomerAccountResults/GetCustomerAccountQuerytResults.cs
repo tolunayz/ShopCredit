@@ -1,4 +1,6 @@
-﻿namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
+﻿using ShopCredit.Domain.Entities;
+
+namespace ShopCredit.Application.CQRS.Results.CustomerAccountResults
 {
     public class GetCustomerAccountQuerytResults
     {
@@ -13,7 +15,13 @@
         public Boolean IsPaid { get; set; }
 
         public string Description { get; set; }
+        public int CurrentDebt { get;  set; } //**
 
+        public int Debt { get;  set; }   //**
+
+        public int PaidDebt { get;  set; }   //**
+
+    
 
     }
     public class CustomerResults

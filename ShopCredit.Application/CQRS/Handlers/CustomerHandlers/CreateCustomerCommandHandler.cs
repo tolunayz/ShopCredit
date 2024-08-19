@@ -9,7 +9,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
     private readonly IWriteRepository<Customer> _writeRepository;
     private readonly IMediator _mediator;
     private readonly IShopCreditContext _con;
-    //private readonly NotificationSender _notificationSender;
+   
 
 
     public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con/*, NotificationSender notificationSender*/)
@@ -17,7 +17,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
         _writeRepository = writeRepository;
         _mediator = mediator;
         _con = con;
-        //_notificationSender = notificationSender;
+      
     }
 
     public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
@@ -32,11 +32,6 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
         await _con.Customers.AddAsync(customer);
         await _con.SaveChangesAsync(cancellationToken);
         await _mediator.Publish(new CustomerCreatedNotification(customer), cancellationToken);
-
-        //_notificationSender.SendNotification("sdsds");
-        ////await Task.Delay(5000);
-        ////_notificationSender.ReadNotification("reading");
-      
         
         return true;
     }

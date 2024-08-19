@@ -8,7 +8,7 @@ using ShopCredit.Domain.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
 {
-    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery,List<GetCustomerQueryResult>>
+    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, List<GetCustomerQueryResult>>
     {
         private readonly IReadRepository<Customer> _readRepository;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
         public async Task<List<GetCustomerQueryResult>> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
             var customer = await _readRepository.GetAll()
-              .Include(c => c.CustomerAccounts)     
+              .Include(c => c.CustomerAccounts)
               .ToListAsync(cancellationToken);
 
             if (customer == null)

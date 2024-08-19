@@ -21,16 +21,13 @@ namespace ShopCredit.Entities
         }
 
         /// <summary>
-        /// Admin propertyleri
+        /// Admin properties
         /// </summary>
         /// <param name="adminName"></param>
         /// <param name="adminPassword"></param>
         public void AdminProperties(string adminName, string adminPassword)
         {
-
-            BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
-            //Id = Guid.NewGuid();
-            //CreatedDate = DateTime.Now;
+            //BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
             AdminName = adminName;
             AdminPassword = adminPassword;
         }

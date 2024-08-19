@@ -27,6 +27,7 @@ namespace ShopCredit.Infrastructure.Context
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+
             modelBuilder.Entity<CustomerAccount>()
 
             .HasOne(ca => ca.Customer)

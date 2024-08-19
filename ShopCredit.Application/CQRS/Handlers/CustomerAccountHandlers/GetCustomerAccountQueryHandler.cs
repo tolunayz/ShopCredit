@@ -33,6 +33,9 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
                 AccountId = x.Id,
                 Description = x.Description,
                 IsPaid = x.IsPaid,
+                Debt = x.Debt,
+                PaidDebt = x.PaidDebt,
+                CurrentDebt = x.CurrentDebt,
                 Customer = new CustomerResults          
                 {
                     Id = x.Customer.Id,
