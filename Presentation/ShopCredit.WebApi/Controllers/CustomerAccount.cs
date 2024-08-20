@@ -50,12 +50,19 @@ namespace ShopCredit.WebApi.Controllers
         }
 
         [HttpPut]
-
         public async Task<IActionResult> UpdateCustomerAccount(UpdateCustomerAccountCommand command)
         {
             await _mediator.Send(command);
             return Ok("Hesap Bilgileri Güncellendi");
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Payment(PaymentCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok("Ödeme yapıldı");
+        }
+
     }
 }
 

@@ -11,7 +11,6 @@ namespace ShopCredit.Application.CQRS.Commands.CostomerAccountCommands
             Debt = debt;
             PaidDebt = paidDebt;
         }
-
         public Guid AccountId { get; set; }
         public string Description { get; set; }
         public int Debt { get; set; }

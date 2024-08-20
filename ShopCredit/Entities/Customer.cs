@@ -105,7 +105,11 @@ namespace ShopCredit.Domain.Entities
             Address = address;
             return this;
         }
-
+        /// <summary>
+        /// Email set ettmek içindir
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public Customer SetEmail(string email)
         {
             Email = email;

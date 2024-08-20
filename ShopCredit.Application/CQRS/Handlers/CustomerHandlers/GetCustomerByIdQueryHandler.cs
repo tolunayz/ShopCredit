@@ -45,12 +45,12 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
                         AccountId = ca.Id,
                         CreatedDate = ca.CreatedDate,
 
-                    }).ToList() // CustomerAccount Id'leri ekleniyor
+                    }).ToList()
                 };
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("An error occurred while getting the customer by ID.", ex);
+                throw new ApplicationException("Id'ye göre customer çağırılamadı", ex);
             }
         }
     }

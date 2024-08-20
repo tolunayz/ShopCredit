@@ -11,11 +11,11 @@ namespace ShopCredit.Entities
 
         public string? Description { get; private set; }
 
-        public int CurrentDebt { get; private set; } 
+        public int CurrentDebt { get; private set; }
 
-        public int Debt { get; private set; }  
+        public int Debt { get; private set; }
 
-        public int PaidDebt { get; private set; }   
+        public int PaidDebt { get; private set; }
 
         public virtual Customer Customer { get; set; }
 
@@ -23,6 +23,7 @@ namespace ShopCredit.Entities
         /// CustomerAccounts Constructer
         /// </summary>
         public CustomerAccount() { }
+
 
         /// <summary>
         /// Customer Account Properties
@@ -40,6 +41,37 @@ namespace ShopCredit.Entities
             PaidDebt = paidDebt;
         }
 
+
+        /// <summary>
+        /// CustomerAccount Update Methodu.
+        /// </summary>
+        /// <param name="ısPaid"></param>
+        /// <param name="description"></param>
+        /// <param name="currentDebt"></param>
+        /// <param name="debt"></param>
+        /// <param name="paidDebt"></param>
+        /// <returns></returns>
+        public static CustomerAccount Update(CustomerAccount ca, string? description, int debt, int paidDebt)
+        {
+            ca.Description = description;
+            ca.Debt = debt;
+            ca.PaidDebt = paidDebt;
+            ca.CurrentDebt = debt - paidDebt;
+            ca.IsPaid = (debt - paidDebt) == 0;
+
+            return ca;
+        }
+
+
+        public static CustomerAccount SetPaidDebt(CustomerAccount ca, int paidDebt)
+        {
+            ca.CurrentDebt -= paidDebt;
+            ca.PaidDebt += paidDebt;
+            ca.IsPaid = ca.CurrentDebt == 0;
+     
+            return ca;
+        }
+
         /// <summary>
         /// CustomerAccount Create Method
         /// </summary>
@@ -48,7 +80,7 @@ namespace ShopCredit.Entities
         /// <param name="currentDebt"></param>
         /// <param name="debt"></param>
         /// <param name="paidDebt"></param>
-        public static CustomerAccount Create(string? description, int debt, int paidDebt,Guid customerId)
+        public static CustomerAccount Create(string? description, int debt, int paidDebt, Guid customerId)
         {
             CustomerAccount ca = new CustomerAccount();
             ca.BaseEntityPropertys(Guid.NewGuid(), DateTime.Now);
@@ -61,7 +93,6 @@ namespace ShopCredit.Entities
 
             return ca;
         }
-
     }
 }
 

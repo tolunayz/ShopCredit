@@ -20,17 +20,21 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
         }
         public async Task Handle(UpdateCustomerAccountCommand request, CancellationToken cancellationToken)
         {
-            var values = await _readRepository.GetByIdAsync(request.AccountId);
-            var customer = await _customerReadRepository.GetByIdAsync(request.AccountId);
-            values.CustomerAccountProperties
-            (      
-                request.Description,
-                request.Debt,
-                request.PaidDebt
+            var customerAccount = await _readRepository.GetByIdAsync(request.AccountId);
+
+            if (customerAccount != null)
+            {
+                CustomerAccount.Update(
+                    customerAccount,
+                    request.Description,
+                    request.Debt,
+                    request.PaidDebt
                 );
 
-            await _writeRepository.Update(values);
-            await _writeRepository.SaveAsync();
+                await _writeRepository.Update(customerAccount);
+                await _writeRepository.SaveAsync();
+            }
         }
+
     }
 }
