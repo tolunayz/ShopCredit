@@ -17,7 +17,7 @@ namespace ShopCredit.Application.CQRS.Handlers.AdminHandlers
 
         public async Task<List<GetAdminQueryResult>> Handle(GetAdminQuery request, CancellationToken cancellationToken)
         {
-            var values = _readRepository.GetAll();
+            var values =  _readRepository.GetAll();
             return values.Select(x => new GetAdminQueryResult
             {
                 Id = x.Id,

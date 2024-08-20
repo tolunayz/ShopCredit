@@ -4,6 +4,7 @@ using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
 using ShopCredit.Application.CQRS.Commands.CustomerAccountCommands;
 using ShopCredit.Application.CQRS.Queries;
 using ShopCredit.Application.CQRS.Queries.CustomerAccountQueries;
+using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 
 namespace ShopCredit.WebApi.Controllers
 {
@@ -61,6 +62,13 @@ namespace ShopCredit.WebApi.Controllers
         {
             await _mediator.Send(command);
             return Ok("Ödeme yapıldı");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAccount(Guid Id)
+        {
+            var getAccount = await _mediator.Send(new GetAccountByIdQuery(Id));
+            return Ok(getAccount);
         }
 
     }

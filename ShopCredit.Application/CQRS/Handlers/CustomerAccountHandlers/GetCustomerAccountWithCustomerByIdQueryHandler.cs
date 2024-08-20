@@ -2,19 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using ShopCredit.Application.CQRS.Queries;
 using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
-using ShopCredit.Application.CQRS.Results.CustomerResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Domain.Entities;
 using ShopCredit.Entities;
 
 namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 {
-    public class GetCustomerAccountByIdQueryHandler : IRequestHandler<GetCustomerAccountByIdQuery, GetCustomerAccountByIdQueryResult>
+    public class GetCustomerAccountWithCustomerByIdQueryHandler : IRequestHandler<GetCustomerAccountByIdQuery, GetCustomerAccountByIdQueryResult>
     {
         private readonly IReadRepository<Customer> _customerRepository;
         private readonly IReadRepository<CustomerAccount> _customerAccountRepository;
 
-        public GetCustomerAccountByIdQueryHandler(
+        public GetCustomerAccountWithCustomerByIdQueryHandler(
             IReadRepository<CustomerAccount> customerAccountRepository,
             IReadRepository<Customer> customerRepository)
         {
