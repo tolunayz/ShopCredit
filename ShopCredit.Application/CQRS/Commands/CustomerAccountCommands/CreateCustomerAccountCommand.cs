@@ -8,9 +8,9 @@ namespace ShopCredit.Application.CQRS.Commands.CustomerAccountCommands
 
         public  string? Description { get; set; }
 
-        public int Debt { get; set; }   //**
+        public int Debt { get; set; }  
 
-        public int PaidDebt { get; set; }   //**
+        public int PaidDebt { get; set; }   
   
     }
 }

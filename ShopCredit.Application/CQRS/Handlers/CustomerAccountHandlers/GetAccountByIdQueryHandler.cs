@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ShopCredit.Application.CQRS.Queries.CustomerQueries;
+using ShopCredit.Application.CQRS.Queries.CustomerAccountQueries;
 using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
 using ShopCredit.Application.Interfaces;
 using ShopCredit.Entities;

@@ -9,13 +9,30 @@ namespace ShopCredit.Infrastructure.FluentApi
         public void Configure(EntityTypeBuilder<Customer> builder)
         {  
             builder.HasKey(s => s.Id);
-            builder.Property(s => s.Id).IsRequired();
-            builder.Property(s => s.CreatedDate).IsRequired();
-            builder.Property(s => s.Address).IsRequired().HasMaxLength(100);
-            builder.Property(s => s.Name).HasMaxLength(100); // Optional
-            builder.Property(s => s.Surname).IsRequired().HasMaxLength(100);
-            builder.Property(s => s.PhoneNumber).IsRequired().HasMaxLength(10);
-            builder.Property(s => s.Email).HasMaxLength(100); // Optional
+
+            builder.Property(s => s.Id)
+                .IsRequired();
+
+            builder.Property(s => s.CreatedDate)
+                .IsRequired();
+
+            builder.Property(s => s.Address)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(s => s.Name)
+                .HasMaxLength(100); // Optional
+
+            builder.Property(s => s.Surname)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(s => s.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(10);
+
+            builder.Property(s => s.Email)
+                .HasMaxLength(100); // Optional
           
             //builder.HasMany(c => c.CustomerAccounts)
             //  .WithOne(ca => ca.Customer)

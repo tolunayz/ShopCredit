@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
 using ShopCredit.Application.CQRS.Commands.CustomerAccountCommands;
-using ShopCredit.Application.CQRS.Queries;
 using ShopCredit.Application.CQRS.Queries.CustomerAccountQueries;
 using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 
@@ -17,13 +16,6 @@ namespace ShopCredit.WebApi.Controllers
         public CustomerAccount(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetCustomerAccount(Guid customerId)
-        {
-            var getCustomerById = await _mediator.Send(new GetCustomerAccountByIdQuery(customerId));
-            return Ok(getCustomerById);
         }
 
         [HttpGet]

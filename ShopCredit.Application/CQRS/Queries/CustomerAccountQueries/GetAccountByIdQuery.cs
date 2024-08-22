@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using ShopCredit.Application.CQRS.Results.CustomerAccountResults;
 
-namespace ShopCredit.Application.CQRS.Queries.CustomerQueries
+namespace ShopCredit.Application.CQRS.Queries.CustomerAccountQueries
 {
-    public class GetAccountByIdQuery:IRequest<GetAccountByIdQueryResult>
+    public class GetAccountByIdQuery : IRequest<GetAccountByIdQueryResult>
     {
         public Guid Id { get; set; }
 

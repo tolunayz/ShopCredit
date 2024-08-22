@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\ShopCredit.Persistance\ShopCredit.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\ShopCredit.Application\ShopCredit.Application.csproj" />
   </ItemGroup>
 
 </Project>

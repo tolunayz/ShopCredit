@@ -23,7 +23,7 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerAccountHandlers
 
         public async Task<GetCustomerAccountByIdQueryResult> Handle(GetCustomerAccountByIdQuery request, CancellationToken cancellationToken)
         {
-            // Eager loading: Customer property of CustomerAccount
+            // Eager loading
             var account = await _customerAccountRepository.GetAll()
                 .Include(x => x.Customer)
                 .FirstOrDefaultAsync(x => x.Customer.Id == request.CustomerId, cancellationToken);

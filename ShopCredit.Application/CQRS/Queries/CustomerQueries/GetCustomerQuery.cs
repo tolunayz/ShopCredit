@@ -6,16 +6,14 @@ namespace ShopCredit.Application.CQRS.Queries.CustomerQueries
 {
     public class GetCustomerQuery : IRequest<List<GetCustomerQueryResult>>
     {
-        //public Guid Id { get; set; }
-
-        //public GetCustomerQuery(Guid id)
-        //{
-        //    Id = id;
-        //}
-
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
         public GetCustomerQuery()
         {
-
+         
         }
     }
 }

@@ -21,5 +21,8 @@
     {
         public Guid AccountId { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public bool  isPaid { get; set; }
+        public int CurrentDebt { get; set; }
+
     }
 }

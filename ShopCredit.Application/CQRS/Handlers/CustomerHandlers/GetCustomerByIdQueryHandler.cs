@@ -44,6 +44,8 @@ namespace ShopCredit.Application.CQRS.Handlers.CustomerHandlers
                     {
                         AccountId = ca.Id,
                         CreatedDate = ca.CreatedDate,
+                        isPaid=ca.IsPaid,
+                        CurrentDebt=ca.CurrentDebt,
 
                     }).ToList()
                 };

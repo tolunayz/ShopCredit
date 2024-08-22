@@ -44,14 +44,13 @@ namespace ShopCredit.Application.Services
 
             var configurationOptions = new ConfigurationOptions
             {
-                EndPoints = { "localhost:6379" }, // Update this with your Redis server details
-                AbortOnConnectFail = false // This will make the connection retry if the first attempt fails
+                EndPoints = { "localhost:6379" }, 
+                AbortOnConnectFail = false 
             };
 
             var multiplexer = ConnectionMultiplexer.Connect(configurationOptions);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
-            //services.AddScoped<NotificationSender>();
 
 
 
