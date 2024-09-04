@@ -22,22 +22,19 @@ namespace ShopCredit.Domain.Entities.Base
         }
 
         public Guid Id { get; private set; }
+
         public DateTime CreatedDate { get; private set; }
 
         protected void AddDomainEvent(DomainEvent domainEvent)
         {
             _domainEvents.Enqueue(@domainEvent);
         }
+
         protected void UpdateDomainEvent(DomainEvent domainEvent)
         {
             _domainEvents.Enqueue(@domainEvent);
         }
 
-      
-        //protected void UpdateDomainEvent(DomainEvent integrationEvent)
-        //{
-        //    _integrationEvents.Enqueue(integrationEvent);
-        //}
         public BaseEntity()
         {
             

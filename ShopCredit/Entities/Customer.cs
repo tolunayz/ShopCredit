@@ -51,7 +51,7 @@ namespace ShopCredit.Domain.Entities
         }
 
         /// <summary>
-        /// Müşteri oluşturma
+        /// Customer Create Method
         /// </summary>
         /// <param name="name"></param>
         /// <param name="surname"></param>

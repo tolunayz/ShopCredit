@@ -19,7 +19,7 @@ namespace ShopCredit.Application.CQRS.Handlers.NotificationHandlers
 
         public async Task Handle(CustomerUpdatedNotification notification, CancellationToken cancellationToken)
         {
-            var message = $"{notification.Customer.Name} {notification.Customer.Surname} Kullanıcısının bilgileri güncellendi";
+            var message = $"{notification.Customer.Name} {notification.Customer.Surname}{notification.Customer.Id} Kullanıcısının bilgileri güncellendi";
 
             await _publishEndpoint.Publish(new CustomerNotificationMessage
             {

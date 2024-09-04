@@ -6,18 +6,14 @@ using ShopCredit.Domain.Entities;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, bool>
 {
-    private readonly IWriteRepository<Customer> _writeRepository;
+
     private readonly IMediator _mediator;
     private readonly IShopCreditContext _con;
-   
 
-
-    public CreateCustomerCommandHandler(IWriteRepository<Customer> writeRepository, IMediator mediator, IShopCreditContext con/*, NotificationSender notificationSender*/)
+    public CreateCustomerCommandHandler(IMediator mediator, IShopCreditContext con/*, NotificationSender notificationSender*/)
     {
-        _writeRepository = writeRepository;
         _mediator = mediator;
         _con = con;
-      
     }
 
     public async Task<bool> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
@@ -32,7 +28,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
         await _con.Customers.AddAsync(customer);
         await _con.SaveChangesAsync(cancellationToken);
         await _mediator.Publish(new CustomerCreatedNotification(customer), cancellationToken);
-        
+
         return true;
     }
 }

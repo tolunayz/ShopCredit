@@ -13,15 +13,6 @@ namespace ShopCredit.Infrastructure.Repositories
             _context = context;
         }
 
-      
-        //public IEnumerable<Customer> GetCustomers()
-        //{
-        //    return _context.Customers
-        //                   .Include(c => c.CustomerAccounts)
-        //                   .ToList();
-
-        //}
-
         public async Task<Customer?> GetCustomerByIdWithAccountsAsync(Guid customerId)
         {
             return await _context.Customers

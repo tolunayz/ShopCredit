@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ShopCredit.Application.CQRS.Commands.CostomerAccountCommands;
 using ShopCredit.Application.CQRS.Commands.CustomerAccountCommands;
 using ShopCredit.Application.CQRS.Queries.CustomerAccountQueries;
-using ShopCredit.Application.CQRS.Queries.CustomerQueries;
 
 namespace ShopCredit.WebApi.Controllers
 {
